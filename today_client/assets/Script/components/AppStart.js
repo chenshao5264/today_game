@@ -1,7 +1,13 @@
 
 function initInstance() {
-    cc.gg = {}
+    cc.gg = cc.gg ? cc.gg : {}
     cc.gg.utils = require("../utils");
+    
+    cc.gg.protocol = require("../protocol/protocol");
+
+
+    var MsgHandler = require("../net/MsgHandler");
+    //MsgHandler.getInstance().startMsgQueue();
 }
 
 

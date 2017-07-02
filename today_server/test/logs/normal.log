@@ -1,0 +1,23 @@
+[2017-07-01 10:32:46.009] [ERROR] normal - { Error: ER_DUP_ENTRY: Duplicate entry 'chenshao01' for key 'account'
+    at Query.Sequence._packetToError (/Users/chenshao/Documents/github/today_game/today_server/node_modules/mysql/lib/protocol/sequences/Sequence.js:52:14)
+    at Query.ErrorPacket (/Users/chenshao/Documents/github/today_game/today_server/node_modules/mysql/lib/protocol/sequences/Query.js:77:18)
+    at Protocol._parsePacket (/Users/chenshao/Documents/github/today_game/today_server/node_modules/mysql/lib/protocol/Protocol.js:280:23)
+    at Parser.write (/Users/chenshao/Documents/github/today_game/today_server/node_modules/mysql/lib/protocol/Parser.js:75:12)
+    at Protocol.write (/Users/chenshao/Documents/github/today_game/today_server/node_modules/mysql/lib/protocol/Protocol.js:39:16)
+    at Socket.<anonymous> (/Users/chenshao/Documents/github/today_game/today_server/node_modules/mysql/lib/Connection.js:103:28)
+    at emitOne (events.js:96:13)
+    at Socket.emit (events.js:188:7)
+    at readableAddChunk (_stream_readable.js:176:18)
+    at Socket.Readable.push (_stream_readable.js:134:10)
+    --------------------
+    at Protocol._enqueue (/Users/chenshao/Documents/github/today_game/today_server/node_modules/mysql/lib/protocol/Protocol.js:141:48)
+    at PoolConnection.query (/Users/chenshao/Documents/github/today_game/today_server/node_modules/mysql/lib/Connection.js:208:25)
+    at /Users/chenshao/Documents/github/today_game/today_server/helper/dbHelper.js:16:18
+    at Handshake.onConnect (/Users/chenshao/Documents/github/today_game/today_server/node_modules/mysql/lib/Pool.js:64:7)
+    at Handshake.Sequence.end (/Users/chenshao/Documents/github/today_game/today_server/node_modules/mysql/lib/protocol/sequences/Sequence.js:86:24)
+    at Handshake.Sequence.OkPacket (/Users/chenshao/Documents/github/today_game/today_server/node_modules/mysql/lib/protocol/sequences/Sequence.js:95:8)
+    at Protocol._parsePacket (/Users/chenshao/Documents/github/today_game/today_server/node_modules/mysql/lib/protocol/Protocol.js:280:23)
+    at Parser.write (/Users/chenshao/Documents/github/today_game/today_server/node_modules/mysql/lib/protocol/Parser.js:75:12)
+    at Protocol.write (/Users/chenshao/Documents/github/today_game/today_server/node_modules/mysql/lib/protocol/Protocol.js:39:16)
+    at Socket.<anonymous> (/Users/chenshao/Documents/github/today_game/today_server/node_modules/mysql/lib/Connection.js:103:28) code: 'ER_DUP_ENTRY', errno: 1062, sqlState: '23000', index: 0 }
+[2017-07-01 10:33:30.413] [ERROR] normal - 重复创建

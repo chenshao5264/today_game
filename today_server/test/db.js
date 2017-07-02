@@ -1,6 +1,12 @@
-var dbHepler = require("../../helper/dbHelper");
+var dbHelper = require("../helper/dbHelper");
+var configs      = require("../config");
 
-dbHepler.is_account_exist("chenshao001", function(exist) {
+dbHelper.init(configs.mysql());
+
+
+
+
+dbHelper.is_account_exist("chenshao001", function(exist) {
 	if (exist) {
 		console.log("11111");
 	} else {
@@ -8,10 +14,15 @@ dbHepler.is_account_exist("chenshao001", function(exist) {
 	}
 })
 
-dbHepler.create_account("chenshao001", "chb123", function(suc) {
+dbHelper.create_account("chenshao001", "chb123", function(suc) {
 	if (suc) {
 		console.log("3333");
 	} else {
 		console.log("4444");
 	}
+});
+
+
+dbHelper.create_user({account: "chenshao01", nickname: "辰少01", gems: 10}, function() {
+
 });

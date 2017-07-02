@@ -1,6 +1,6 @@
-var crypto   = require("../../utils/crypto");
 var express  = require("express");
-var dbHepler = require("../../helper/dbHelper");
+var crypto   = require("../../utils/crypto");
+var dbHelper = require("../../helper/dbHelper");
 var logger   = require("../../utils/logger");
 
 var app = express();
@@ -40,27 +40,31 @@ app.get("/login", function(req, res) {
         return;
     }
 
-    dbHepler.get_account_info(account, password, function(info) {
+    dbHelper.get_account_info(account, password, function(info) {
         if (info == null) {
             send(res, {errcode: 1, errmsg: "invalid account or invalid password"});
             return;
         }
 
+        var sign = crypto.md5(account)
+
         var ret = {
             errcode: 0,
             errmsg: "ok",
             account: account,
+            sign: sign,
         }
         send(res, ret);
     });
 });
 
 app.get("/register", function(req, res) {
-    var account = req.query.account;
+    var account  = req.query.account;
     var password = req.query.password;
+    var nickname = req.query.nickname;
 
-    if (account == null || password == null) {
-        send(res, {errcode: 1, errmsg: "account or passwrod is empty."});
+    if (account == null || password == null || nickname == null) {
+        send(res, {errcode: 1, errmsg: "account or passwrod or nickname is empty."});
         return;
     }
 
@@ -72,10 +76,11 @@ app.get("/register", function(req, res) {
         send(res, {errcode: 0, errmsg: "ok"});
     };
 
-    dbHepler.is_account_exist(account, function(exist) {
+    dbHelper.is_account_exist(account, function(exist) {
         if (!exist) {
-            dbHepler.create_account(account, password, function(suc) {
+            dbHelper.create_account(account, password, function(suc) {
                 if (suc) {
+                    dbHelper.create_user({account: account, nickname: nickname, gems: 10})
                     fnSucceed();
                 } else {
                     fnFailed();

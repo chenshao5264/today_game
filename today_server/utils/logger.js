@@ -5,17 +5,17 @@ log4js.configure({
     {
         type: 'console' // 控制台输出
     }
-    //,
-    //{
-    //   type: 'file', //文件输出
-    //   filename: 'logs/normal.log', 
-    //   category: 'normal' 
-    //}
+    ,
+    {
+        type: 'file', //文件输出
+        filename: 'logs/normal.log', 
+        category: 'normal' 
+    }
     ],
     replaceConsole: true // 替换 console.log
 });
 
 var logger = log4js.getLogger("normal");
-logger.setLevel("INFO");
+logger.setLevel("TRACE");
 
 module.exports = logger

@@ -1,0 +1,6 @@
+package todaygame;
+syntax = "proto3";
+message TextMessage {
+    required string name = 1;
+    optional int32 age = 2;
+}

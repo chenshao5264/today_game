@@ -173,3 +173,9 @@
 [2017-07-02 22:22:39.389] [INFO] normal - 192.168.0.109 连接服务器
 [2017-07-02 22:22:42.172] [TRACE] normal - 处理注册请求
 [2017-07-02 22:22:42.182] [TRACE] normal - RegisterMessage { account: 'chenshao01', password: 'chb123', nickname: '' }
+[2017-07-03 21:36:03.352] [INFO] normal - 服务器启动: 9100
+[2017-07-03 21:36:06.833] [INFO] normal - 192.168.0.109 连接服务器
+[2017-07-03 23:26:24.715] [INFO] normal - 服务器启动: 9100
+[2017-07-03 23:26:27.845] [INFO] normal - 192.168.0.109 连接服务器
+[2017-07-03 23:26:49.897] [INFO] normal - socket disconnect: transport close
+[2017-07-03 23:26:50.983] [INFO] normal - 192.168.0.109 连接服务器

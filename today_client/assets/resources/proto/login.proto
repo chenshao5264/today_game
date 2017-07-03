@@ -1,7 +1,7 @@
-package todaygame;
+package login;
 syntax = "proto3";
 
-message RegisterMessage {
+message register {
     // 请求
     optional string account  = 1;
     optional string password = 2;

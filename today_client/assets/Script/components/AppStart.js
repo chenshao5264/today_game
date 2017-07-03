@@ -8,6 +8,11 @@ function initInstance() {
 
     var MsgHandler = require("../net/MsgHandler");
     //MsgHandler.getInstance().startMsgQueue();
+    //
+    //
+    
+    var Protobufjs = require("../net/Protobufjs");
+    Protobufjs.load();
 }
 
 

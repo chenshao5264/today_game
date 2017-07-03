@@ -2,6 +2,9 @@ var http = require("../utils/http");
 
 var config = require("../config");
 
+
+
+
 cc.Class({
     extends: cc.Component,
 
@@ -99,12 +102,16 @@ cc.Class({
     onLoad: function () {
         cc.gg = cc.gg ? cc.gg : {}
 
-        var NetworkCtrl = require("../net/NetworkCtrl");
-        var loginNetCtrl = new NetworkCtrl();
-        loginNetCtrl.init("login");
-        loginNetCtrl.makeConnect();
-        cc.gg.loginNetCtrl = loginNetCtrl;
+       
 
+        // var NetworkCtrl = require("../net/NetworkCtrl");
+        // var loginNetCtrl = new NetworkCtrl();
+        // loginNetCtrl.init("login");
+        // loginNetCtrl.makeConnect();
+        // cc.gg.loginNetCtrl = loginNetCtrl;
+        // 
+
+        //Protobufjs.load()
     },
 
     // called every frame, uncomment this function to activate update callback

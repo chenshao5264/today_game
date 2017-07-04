@@ -179,3 +179,168 @@
 [2017-07-03 23:26:27.845] [INFO] normal - 192.168.0.109 连接服务器
 [2017-07-03 23:26:49.897] [INFO] normal - socket disconnect: transport close
 [2017-07-03 23:26:50.983] [INFO] normal - 192.168.0.109 连接服务器
+[2017-07-04 19:35:42.803] [INFO] normal - 服务器启动: 9100
+[2017-07-04 19:57:52.359] [INFO] normal - 服务器启动: 9100
+[2017-07-04 19:57:55.962] [INFO] normal - 192.168.0.109 连接服务器
+[2017-07-04 19:59:11.740] [INFO] normal - socket disconnect: transport close
+[2017-07-04 19:59:12.861] [INFO] normal - 192.168.0.109 连接服务器
+[2017-07-04 19:59:52.149] [INFO] normal - socket disconnect: transport close
+[2017-07-04 19:59:53.280] [INFO] normal - 192.168.0.109 连接服务器
+[2017-07-04 20:01:08.105] [INFO] normal - socket disconnect: transport close
+[2017-07-04 20:01:09.205] [INFO] normal - 192.168.0.109 连接服务器
+[2017-07-04 20:01:20.171] [INFO] normal - socket disconnect: transport close
+[2017-07-04 20:01:21.361] [INFO] normal - 192.168.0.109 连接服务器
+[2017-07-04 20:07:13.127] [INFO] normal - 服务器启动: 9100
+[2017-07-04 20:07:20.561] [INFO] normal - 192.168.0.109 连接服务器
+[2017-07-04 20:08:56.225] [INFO] normal - socket disconnect: transport close
+[2017-07-04 20:08:57.178] [INFO] normal - 192.168.0.109 连接服务器
+[2017-07-04 20:09:20.508] [INFO] normal - socket disconnect: transport close
+[2017-07-04 20:09:21.782] [INFO] normal - 192.168.0.109 连接服务器
+[2017-07-04 20:10:33.849] [INFO] normal - socket disconnect: transport close
+[2017-07-04 20:10:35.060] [INFO] normal - 192.168.0.109 连接服务器
+[2017-07-04 20:12:02.577] [INFO] normal - socket disconnect: transport close
+[2017-07-04 20:12:03.862] [INFO] normal - 192.168.0.109 连接服务器
+[2017-07-04 20:13:01.706] [INFO] normal - socket disconnect: transport close
+[2017-07-04 20:13:02.828] [INFO] normal - 192.168.0.109 连接服务器
+[2017-07-04 20:14:38.349] [INFO] normal - 服务器启动: 9100
+[2017-07-04 20:14:43.448] [INFO] normal - 192.168.0.109 连接服务器
+[2017-07-04 20:14:45.245] [INFO] normal - 100
+[2017-07-04 20:14:45.248] [INFO] normal - 100
+[2017-07-04 20:14:45.250] [TRACE] normal - 处理注册请求
+[2017-07-04 20:14:45.255] [WARN] normal - socket error: TypeError: Cannot read property 'decode' of null
+[2017-07-04 20:14:45.256] [INFO] normal - socket disconnect: client error
+[2017-07-04 20:28:22.255] [INFO] normal - 服务器启动: 9100
+[2017-07-04 20:32:56.119] [INFO] normal - 服务器启动: 9100
+[2017-07-04 20:34:38.016] [INFO] normal - 192.168.0.109 连接服务器
+[2017-07-04 20:34:44.832] [TRACE] normal - 处理注册请求
+[2017-07-04 20:34:44.832] [INFO] normal - register { account: 'chenshao01', password: 'chb123', nickname: '' }
+[2017-07-04 20:34:44.838] [WARN] normal - socket error: ReferenceError: getBuffer is not defined
+[2017-07-04 20:34:44.840] [INFO] normal - socket disconnect: client error
+[2017-07-04 20:41:15.592] [INFO] normal - 服务器启动: 9100
+[2017-07-04 20:41:32.010] [INFO] normal - 192.168.0.109 连接服务器
+[2017-07-04 20:42:21.526] [INFO] normal - 服务器启动: 9100
+[2017-07-04 20:42:25.414] [INFO] normal - 192.168.0.109 连接服务器
+[2017-07-04 20:42:28.282] [TRACE] normal - 处理注册请求
+[2017-07-04 20:42:28.282] [INFO] normal - register { account: 'chenshao01', password: 'chb123', nickname: '' }
+[2017-07-04 20:42:31.991] [INFO] normal - socket disconnect: transport close
+[2017-07-04 20:42:31.992] [INFO] normal - 192.168.0.109 断开服务器
+[2017-07-04 20:42:32.943] [INFO] normal - 192.168.0.109 连接服务器
+[2017-07-04 20:43:27.074] [INFO] normal - 服务器启动: 9100
+[2017-07-04 20:43:32.742] [INFO] normal - 192.168.0.109 连接服务器
+[2017-07-04 20:43:40.220] [TRACE] normal - 处理注册请求
+[2017-07-04 20:43:40.220] [INFO] normal - register { account: 'chenshao01', password: 'chb123', nickname: '' }
+[2017-07-04 20:43:42.690] [INFO] normal - socket disconnect: transport close
+[2017-07-04 20:43:42.691] [INFO] normal - 192.168.0.109 断开服务器
+[2017-07-04 20:43:43.597] [INFO] normal - 192.168.0.109 连接服务器
+[2017-07-04 20:43:54.393] [INFO] normal - 服务器启动: 9100
+[2017-07-04 20:43:58.143] [INFO] normal - 192.168.0.109 连接服务器
+[2017-07-04 20:44:04.165] [TRACE] normal - 处理注册请求
+[2017-07-04 20:44:04.165] [INFO] normal - register { account: 'chenshao01', password: 'chb123', nickname: '' }
+[2017-07-04 20:44:05.401] [INFO] normal - socket disconnect: transport close
+[2017-07-04 20:44:05.402] [INFO] normal - 192.168.0.109 断开服务器
+[2017-07-04 20:44:06.331] [INFO] normal - 192.168.0.109 连接服务器
+[2017-07-04 20:44:17.956] [INFO] normal - socket disconnect: transport close
+[2017-07-04 20:44:17.957] [INFO] normal - 192.168.0.109 断开服务器
+[2017-07-04 20:44:19.140] [INFO] normal - 192.168.0.109 连接服务器
+[2017-07-04 20:44:20.922] [INFO] normal - 服务器启动: 9100
+[2017-07-04 20:44:23.428] [INFO] normal - 192.168.0.109 连接服务器
+[2017-07-04 20:44:25.778] [TRACE] normal - 处理注册请求
+[2017-07-04 20:44:25.778] [INFO] normal - register { account: 'chenshao01', password: 'chb123', nickname: '' }
+[2017-07-04 20:44:27.430] [INFO] normal - socket disconnect: transport close
+[2017-07-04 20:44:27.431] [INFO] normal - 192.168.0.109 断开服务器
+[2017-07-04 20:44:28.423] [INFO] normal - 192.168.0.109 连接服务器
+[2017-07-04 20:53:08.422] [INFO] normal - 服务器启动: 9100
+[2017-07-04 20:53:14.628] [INFO] normal - 192.168.0.109 连接服务器
+[2017-07-04 20:53:19.872] [INFO] normal - socket disconnect: client namespace disconnect
+[2017-07-04 20:53:19.873] [INFO] normal - 192.168.0.109 断开服务器
+[2017-07-04 20:57:55.494] [INFO] normal - 192.168.0.109 连接服务器
+[2017-07-04 21:04:25.849] [INFO] normal - 服务器启动: 9100
+[2017-07-04 21:04:32.378] [INFO] normal - 192.168.0.109 连接服务器
+[2017-07-04 21:04:36.221] [TRACE] normal - 处理注册请求
+[2017-07-04 21:04:36.221] [INFO] normal - register { account: 'chenshao01', password: 'chb123', nickname: '' }
+[2017-07-04 21:06:35.942] [INFO] normal - 服务器启动: 9100
+[2017-07-04 21:06:41.554] [INFO] normal - 192.168.0.109 连接服务器
+[2017-07-04 21:06:44.537] [TRACE] normal - 处理注册请求
+[2017-07-04 21:06:44.537] [INFO] normal - register { account: 'chenshao01', password: 'chb123', nickname: '' }
+[2017-07-04 21:07:34.587] [INFO] normal - 服务器启动: 9100
+[2017-07-04 21:07:38.132] [INFO] normal - 192.168.0.109 连接服务器
+[2017-07-04 21:07:46.334] [TRACE] normal - 处理注册请求
+[2017-07-04 21:07:46.334] [INFO] normal - register { account: 'chenshao01', password: 'chb123', nickname: '' }
+[2017-07-04 21:07:57.899] [INFO] normal - socket disconnect: transport close
+[2017-07-04 21:07:57.899] [INFO] normal - 192.168.0.109 断开服务器
+[2017-07-04 21:07:58.911] [INFO] normal - 192.168.0.109 连接服务器
+[2017-07-04 21:08:02.550] [TRACE] normal - 处理注册请求
+[2017-07-04 21:08:02.552] [INFO] normal - register { account: 'chenshao01', password: 'chb123', nickname: '' }
+[2017-07-04 21:08:11.660] [INFO] normal - socket disconnect: transport close
+[2017-07-04 21:08:11.661] [INFO] normal - 192.168.0.109 断开服务器
+[2017-07-04 21:08:12.731] [INFO] normal - 192.168.0.109 连接服务器
+[2017-07-04 21:08:40.809] [INFO] normal - 服务器启动: 9100
+[2017-07-04 21:08:44.390] [INFO] normal - 192.168.0.109 连接服务器
+[2017-07-04 21:08:46.522] [TRACE] normal - 处理注册请求
+[2017-07-04 21:08:46.523] [INFO] normal - register { account: 'chenshao01', password: 'chb123', nickname: '' }
+[2017-07-04 21:09:32.666] [INFO] normal - 服务器启动: 9100
+[2017-07-04 21:09:34.049] [INFO] normal - 192.168.0.109 连接服务器
+[2017-07-04 21:09:36.501] [TRACE] normal - 处理注册请求
+[2017-07-04 21:09:36.501] [INFO] normal - register { account: 'chenshao01', password: 'chb123', nickname: '' }
+[2017-07-04 21:10:01.698] [INFO] normal - socket disconnect: transport close
+[2017-07-04 21:10:01.698] [INFO] normal - 192.168.0.109 断开服务器
+[2017-07-04 21:10:02.652] [INFO] normal - 192.168.0.109 连接服务器
+[2017-07-04 21:10:07.258] [TRACE] normal - 处理注册请求
+[2017-07-04 21:10:07.260] [INFO] normal - register { account: 'chenshao01', password: 'chb123', nickname: '' }
+[2017-07-04 21:10:44.089] [INFO] normal - socket disconnect: transport close
+[2017-07-04 21:10:44.089] [INFO] normal - 192.168.0.109 断开服务器
+[2017-07-04 21:10:45.382] [INFO] normal - 192.168.0.109 连接服务器
+[2017-07-04 21:10:47.185] [TRACE] normal - 处理注册请求
+[2017-07-04 21:10:47.185] [INFO] normal - register { account: 'chenshao01', password: 'chb123', nickname: '' }
+[2017-07-04 21:11:23.400] [INFO] normal - 服务器启动: 9100
+[2017-07-04 21:11:24.168] [INFO] normal - 192.168.0.109 连接服务器
+[2017-07-04 21:11:26.288] [TRACE] normal - 处理注册请求
+[2017-07-04 21:11:26.289] [INFO] normal - register { account: 'chenshao01', password: 'chb123', nickname: '' }
+[2017-07-04 21:12:17.132] [INFO] normal - 服务器启动: 9100
+[2017-07-04 21:12:25.771] [INFO] normal - 192.168.0.109 连接服务器
+[2017-07-04 21:12:28.857] [TRACE] normal - 处理注册请求
+[2017-07-04 21:12:28.858] [INFO] normal - register { account: 'chenshao01', password: 'chb123', nickname: '' }
+[2017-07-04 21:12:58.255] [INFO] normal - socket disconnect: transport close
+[2017-07-04 21:12:58.255] [INFO] normal - 192.168.0.109 断开服务器
+[2017-07-04 21:12:59.536] [INFO] normal - 192.168.0.109 连接服务器
+[2017-07-04 21:13:01.363] [TRACE] normal - 处理注册请求
+[2017-07-04 21:13:01.364] [INFO] normal - register { account: 'chenshao01', password: 'chb123', nickname: '' }
+[2017-07-04 21:37:37.677] [INFO] normal - socket disconnect: transport close
+[2017-07-04 21:37:37.678] [INFO] normal - 192.168.0.109 断开服务器
+[2017-07-04 21:37:38.906] [INFO] normal - 192.168.0.109 连接服务器
+[2017-07-04 21:37:40.937] [TRACE] normal - 处理注册请求
+[2017-07-04 21:37:40.937] [INFO] normal - register { account: 'chenshao01', password: 'chb123', nickname: '' }
+[2017-07-04 21:38:39.180] [INFO] normal - socket disconnect: transport close
+[2017-07-04 21:38:39.180] [INFO] normal - 192.168.0.109 断开服务器
+[2017-07-04 21:38:40.280] [INFO] normal - 192.168.0.109 连接服务器
+[2017-07-04 21:38:43.728] [TRACE] normal - 处理注册请求
+[2017-07-04 21:38:43.728] [INFO] normal - register { account: 'chenshao01', password: 'chb123', nickname: '' }
+[2017-07-04 21:40:13.736] [INFO] normal - socket disconnect: transport close
+[2017-07-04 21:40:13.736] [INFO] normal - 192.168.0.109 断开服务器
+[2017-07-04 21:40:14.915] [INFO] normal - 192.168.0.109 连接服务器
+[2017-07-04 21:40:17.859] [TRACE] normal - 处理注册请求
+[2017-07-04 21:40:17.860] [INFO] normal - register { account: 'chenshao01', password: 'chb123', nickname: '' }
+[2017-07-04 21:42:22.258] [INFO] normal - socket disconnect: transport close
+[2017-07-04 21:42:22.258] [INFO] normal - 192.168.0.109 断开服务器
+[2017-07-04 21:42:23.483] [INFO] normal - 192.168.0.109 连接服务器
+[2017-07-04 21:42:27.107] [TRACE] normal - 处理注册请求
+[2017-07-04 21:42:27.107] [INFO] normal - register { account: 'chenshao01', password: 'chb123', nickname: '' }
+[2017-07-04 21:43:35.516] [INFO] normal - 服务器启动: 9100
+[2017-07-04 21:43:46.067] [INFO] normal - 192.168.0.109 连接服务器
+[2017-07-04 21:43:47.562] [TRACE] normal - 处理注册请求
+[2017-07-04 21:43:47.562] [INFO] normal - register { account: 'chenshao01', password: 'chb123', nickname: '' }
+[2017-07-04 21:44:29.913] [INFO] normal - socket disconnect: transport close
+[2017-07-04 21:44:29.913] [INFO] normal - 192.168.0.109 断开服务器
+[2017-07-04 21:44:31.206] [INFO] normal - 192.168.0.109 连接服务器
+[2017-07-04 21:44:34.557] [INFO] normal - socket disconnect: transport close
+[2017-07-04 21:44:34.558] [INFO] normal - 192.168.0.109 断开服务器
+[2017-07-04 21:44:35.501] [INFO] normal - 192.168.0.109 连接服务器
+[2017-07-04 21:44:39.363] [TRACE] normal - 处理注册请求
+[2017-07-04 21:44:39.364] [INFO] normal - register { account: 'chenshao01', password: 'chb123', nickname: '' }
+[2017-07-04 21:49:56.482] [INFO] normal - socket disconnect: transport close
+[2017-07-04 21:49:56.483] [INFO] normal - 192.168.0.109 断开服务器
+[2017-07-04 21:49:57.513] [INFO] normal - 192.168.0.109 连接服务器
+[2017-07-04 21:50:04.362] [INFO] normal - 服务器启动: 9100
+[2017-07-04 21:50:14.965] [INFO] normal - 192.168.0.109 连接服务器
+[2017-07-04 21:50:17.249] [TRACE] normal - 处理注册请求
+[2017-07-04 21:50:17.250] [INFO] normal - register { account: 'chenshao01', password: 'chb123', nickname: '' }

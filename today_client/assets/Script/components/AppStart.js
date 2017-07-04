@@ -3,16 +3,9 @@ function initInstance() {
     cc.gg = cc.gg ? cc.gg : {}
     cc.gg.utils = require("../utils");
     
-    cc.gg.protocol = require("../protocol/protocol");
-
-
-    var MsgHandler = require("../net/MsgHandler");
-    //MsgHandler.getInstance().startMsgQueue();
-    //
-    //
     
-    var Protobufjs = require("../net/Protobufjs");
-    Protobufjs.load();
+    var protobufjs = require("../net/socket_protobufjs");
+    protobufjs.load();
 }
 
 

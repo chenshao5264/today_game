@@ -1,0 +1,12 @@
+package login;
+syntax = "proto3";
+
+message register {
+    // 请求
+    optional string account  = 1;
+    optional string password = 2;
+    optional string nickname = 3;
+
+    // 回复
+    optional int32 errcode = 4;
+}

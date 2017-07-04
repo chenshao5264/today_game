@@ -1,0 +1,1 @@
+{"version":3,"sources":["assets/Script/config.js"],"names":["exports","HTTP_IP_PORT"],"mappings":";;;;;;AAAAA,QAAQC,YAAR,GAAuB,2BAAvB","file":"unknown","sourcesContent":["exports.HTTP_IP_PORT = \"http://192.168.0.109:9000\";"]}

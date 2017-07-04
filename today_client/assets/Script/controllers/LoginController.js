@@ -1,9 +1,9 @@
-var http = require("../utils/http");
-
+var http   = require("../utils/http");
 var config = require("../config");
 
-
-
+var smsg        = require("../net/socket_msg")
+var protocol    = require("../net/protocol").protocol;
+var msgid2proto = require("../net/protocol").msgid2proto;
 
 cc.Class({
     extends: cc.Component,
@@ -34,7 +34,6 @@ cc.Class({
             default: null,
             type: cc.Label
         }
-
     },
 
     onBtnRegister: function(event, data) {
@@ -47,38 +46,21 @@ cc.Class({
 
         var rawData = {account: account, password: pwd, nickname: nickname}
 
-        cc.gg.loginNetCtrl.sendMsgReq(cc.gg.protocol.CL_REGISTER_REQ, rawData, "RegisterMessage", 
-        function(bufferArray)
-        {
-            
-            console.log(bufferArray);
+        smsg.on(msgid2proto[protocol.CL_REGISTER_REQ], function(data) {
+            if (data.errcode == 0) {
+                self.labelTips.string = "注册成功";
+            }
         });
-
-        // var url      = config.HTTP_IP_PORT + "/register?account=" + account + "&password=" + pwd + "&nickname=" + nickname;
-        // http.get_http(url, function(res) {
-        //     console.log(res);
-        //     if (res.errcode == 0) {
-        //         self.labelTips.string = "注册成功";
-        //     } else if (res.errcode == 1) {
-        //         self.labelTips.string = "注册失败,账号重复";
-        //     }
-        // });
+        smsg.send(protocol.CL_REGISTER_REQ, rawData);
     },
 
     onBtnLogin: function(event, data) {
         var self = this;
 
+        smsg.closeSocket("login");
+
         // self.labelTips.string = "正在登录..."
         
-        // var rawData = {account: "chenshao01", password: "chb123", nickname: "辰少01"}
-        // var buffer = self._protojs.getBuffer(rawData);
-        // this._socket.emit("message", {id: cc.gg.protocol.CL_REGISTER_REQ, buffer: buffer}, 
-        //     function(buffer) {
-        //         console.log(buffer);
-        //     });
-
-
-
         // var account = self.ebxAccount.string;
         // var pwd     = self.ebxPasswrod.string;
         // var url     = config.HTTP_IP_PORT +  "/login?account=" + account + "&password=" + pwd;
@@ -100,9 +82,8 @@ cc.Class({
 
     // use this for initialization
     onLoad: function () {
-        cc.gg = cc.gg ? cc.gg : {}
 
-       
+        smsg.connectLoginServer();
 
         // var NetworkCtrl = require("../net/NetworkCtrl");
         // var loginNetCtrl = new NetworkCtrl();

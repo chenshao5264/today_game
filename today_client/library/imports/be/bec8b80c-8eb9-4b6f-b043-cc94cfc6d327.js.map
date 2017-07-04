@@ -1,0 +1,1 @@
+{"version":3,"sources":["assets/Script/utils.js"],"names":["exports","enterScene","name","cc","director","loadScene"],"mappings":";;;;;;AAAAA,QAAQC,UAAR,GAAqB,UAASC,IAAT,EAAe;AAChCC,OAAGC,QAAH,CAAYC,SAAZ,CAAsBH,IAAtB;AACH,CAFD","file":"unknown","sourcesContent":["exports.enterScene = function(name) {\n    cc.director.loadScene(name);\n}"]}

@@ -3,7 +3,7 @@ var protobufjs = require("./socket_protobufjs");
 var msgid2proto = require("./protocol").msgid2proto;
 var sockets = {};
 
-var URL_LOGIN = "ws://192.168.0.109:9100";
+var URL_LOGIN = "ws://127.0.0.1:9100";
 
 var _isHandling = false;
 var msgQueue    = [];
@@ -63,6 +63,7 @@ cc.Class({
             sockets.login = null;
         },
         onMessage: function(data) {
+            console.log(data);
             // start 适配
             var buffer = data.buffer;
             var bufferArray = Object.keys(buffer).map(function(k) {
@@ -70,8 +71,8 @@ cc.Class({
             });
             // end 适配
 
-            var msg = protobufjs.decode(data.id, bufferArray);
-            msg.id = data.id;
+            var msg = protobufjs.decode(data.msgid, bufferArray);
+            msg.id = data.msgid;
             msgQueue.push(msg);
         },
         send: function(msgid, rawData) {
@@ -86,7 +87,7 @@ cc.Class({
             }
 
             var buffer = protobufjs.encode(msgid, rawData);
-            socket.emit("message", {id: msgid, buffer: buffer});
+            socket.emit("message", {msgid: msgid, buffer: buffer});
         }
     }
 });

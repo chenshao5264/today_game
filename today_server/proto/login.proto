@@ -1,12 +1,22 @@
 package login;
 syntax = "proto3";
 
+// message MessagePkg {
+//     required int32 msgid = 1;
+
+//     extensions 10 to 1999;
+// }
+
+// extend MessagePkg {
+//     optional Register register = 10;
+// }
+
 message register {
+
     // 请求
     optional string account  = 1;
     optional string password = 2;
     optional string nickname = 3;
-
     // 回复
-    optional int32 errcode = 4;
+    optional int32 errcode   = 4;
 }

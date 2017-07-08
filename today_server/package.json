@@ -13,5 +13,11 @@
     "log4js": "^1.1.1",
     "mysql": "^2.13.0",
     "protobufjs": "^6.8.0"
+  },
+  "devDependencies": {
+    "@types/log4js": "^0.0.32",
+    "@types/node": "^8.0.7",
+    "@types/protobufjs": "^5.0.31",
+    "@types/socket.io": "^1.4.29"
   }
 }

@@ -1,0 +1,9 @@
+package base;
+syntax = "proto3";
+import "./login.proto";
+
+message MessagePkg {
+    required int32 msgid = 1;
+
+    optional login.Register register = 2;
+}

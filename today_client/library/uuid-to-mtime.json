@@ -395,8 +395,8 @@
     "relativePath": "Script/controllers/LoginController.js"
   },
   "423a28fe-ac77-487b-acf4-0a5386d66073": {
-    "asset": 1499507113000,
-    "meta": 1499507129000,
+    "asset": 1499517419000,
+    "meta": 1499518379000,
     "relativePath": "Script/net/socket_msg.js"
   }
 }

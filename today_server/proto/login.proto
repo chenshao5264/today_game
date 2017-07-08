@@ -1,17 +1,7 @@
 package login;
 syntax = "proto3";
 
-// message MessagePkg {
-//     required int32 msgid = 1;
-
-//     extensions 10 to 1999;
-// }
-
-// extend MessagePkg {
-//     optional Register register = 10;
-// }
-
-message register {
+message Register {
 
     // 请求
     optional string account  = 1;

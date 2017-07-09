@@ -14,7 +14,7 @@ var socket_delegate;
     };
     socket_delegate.message = function (socket, data) {
         switch (data.msgid) {
-            case socket_protocol_1.protocol.CL_REGISTER_REQ: {
+            case socket_protocol_1.protocol.P_CL_REGISTER_REQ: {
                 msgHandler.handeRegisterReq(socket, data.register);
             }
         }

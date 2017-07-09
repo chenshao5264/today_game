@@ -13,14 +13,15 @@ var handleQueue = function() {
         setInterval(function() {
             if (msgQueue.length > 0) {
                 var msg = msgQueue.shift();
-                console.log("hande msgid = " + msg.msgid);
-                
                 var listener = listeners[msg.msgid];
                 if (listener) {
+                    console.log("hande msgid = " + msg.msgid);
                     listener(msg);
+                } else {
+                    console.log("un hande msgid = " + msg.msgid);
                 }
             }
-        }, 1000)
+        }, 100)
     }
 }
 
@@ -45,9 +46,9 @@ cc.Class({
         },
         connectLoginServer: function(url) {
             url = url ? url : URL_LOGIN;
-            var Scon = require("./socket_connect");
-            var scon = new Scon();
-            sockets.login = scon.makeConnect(url, "login");
+            var Sser = require("./socket_service");
+            var sser = new Sser();
+            sockets.login = sser.makeConnect(url, "login");
         },
         onConnected: function(data, stage) {
             console.log("connect: " + stage);
@@ -59,21 +60,8 @@ cc.Class({
             sockets.login = null;
         },
         onMessage: function(data) {
-            // console.log(data);
-            // start 适配
-            // var buffer = data;
-            // var bufferArray = Object.keys(buffer).map(function(k) {
-            //     return buffer[k];
-            // });
-            //let bufferArray = Array.apply([], data);
             let bufferArray = new Uint8Array(data);
-            //console.log(bufferArray);
-            // end 适配
-
             var msg = protobufjs.decode(bufferArray);
-
-            console.log(msg);
-
             msgQueue.push(msg);
         },
         send: function(packet) {
@@ -88,11 +76,8 @@ cc.Class({
                 return;
             }
 
-            console.log(packet);
-
-            var buffer = protobufjs.encode(packet);
-            console.log(buffer);
-            socket.emit("message", buffer);
+            packet = protobufjs.encode(packet);
+            socket.emit("message", packet);
         }
     }
 });

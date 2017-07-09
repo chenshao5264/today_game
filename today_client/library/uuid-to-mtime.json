@@ -374,34 +374,34 @@
     "meta": 1498974977000,
     "relativePath": "resources/proto/login.proto"
   },
-  "503147a5-fde9-458c-9081-61e99c24f18e": {
-    "asset": 1499522949000,
-    "meta": 1499568622000,
-    "relativePath": "Script/net/protocol.js"
-  },
-  "96c541a1-6d3c-4862-b1b6-751e315f76a8": {
-    "asset": 1499524610000,
-    "meta": 1499568622000,
-    "relativePath": "Script/net/socket_connect.js"
-  },
-  "dec92f8d-338c-4a5f-9b2f-e4e0a28c7d11": {
-    "asset": 1499529457000,
-    "meta": 1499568622000,
-    "relativePath": "Script/net/socket_protobufjs.js"
-  },
   "ed5a4e3b-9ad2-43e4-8604-af02d67c5e0b": {
     "asset": 1499568760000,
     "meta": 1499522167000,
     "relativePath": "resources/proto/base.proto"
   },
   "a9ee418f-ee5f-4203-852b-a7a4569493fa": {
-    "asset": 1499569598000,
-    "meta": 1499569602000,
+    "asset": 1499570854000,
+    "meta": 1499570889000,
     "relativePath": "Script/controllers/LoginController.js"
   },
+  "503147a5-fde9-458c-9081-61e99c24f18e": {
+    "asset": 1499570838000,
+    "meta": 1499570889000,
+    "relativePath": "Script/net/protocol.js"
+  },
+  "dec92f8d-338c-4a5f-9b2f-e4e0a28c7d11": {
+    "asset": 1499570770000,
+    "meta": 1499570889000,
+    "relativePath": "Script/net/socket_protobufjs.js"
+  },
+  "f162b355-27a6-4273-9140-316fe883316c": {
+    "asset": 1499571093000,
+    "meta": 1499571124000,
+    "relativePath": "Script/net/socket_service.js"
+  },
   "423a28fe-ac77-487b-acf4-0a5386d66073": {
-    "asset": 1499569554000,
-    "meta": 1499569602000,
+    "asset": 1499571233000,
+    "meta": 1499571236000,
     "relativePath": "Script/net/socket_msg.js"
   }
 }

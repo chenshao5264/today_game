@@ -32,7 +32,7 @@ cc.Class({
             var protoMsg = _root.lookupType('base.MessagePkg');
             var errMsg = protoMsg.verify(payload);
             if (errMsg) {
-                logger.error(errMsg);
+                console.log(errMsg);
                 return [];
             }
             var msg = protoMsg.create(payload);
@@ -41,9 +41,7 @@ cc.Class({
         },
         decode: function decode(buffer) {
             var protoMsg = _root.lookupType('base.MessagePkg');
-            console.log(buffer);
-            //buffer = formatBuffer(buffer)
-            // console.log(buffer);
+            //buffer = formatBuffer(buffer);
             var msg = protoMsg.decode(buffer);
             return msg;
         }

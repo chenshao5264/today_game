@@ -1,4 +1,3 @@
-import { protobufjs } from './../common/socket_protobufjs';
 import { protocol } from './../common/socket_protocol';
 import { logger } from './../../utils/logger';
 import { address2ip } from './../../utils/utility';
@@ -16,7 +15,7 @@ export module socket_delegate {
 
     export let message = function (socket: SocketIO.Socket, data: any) {
         switch(data.msgid) {
-            case protocol.CL_REGISTER_REQ: {
+            case protocol.P_CL_REGISTER_REQ: {
                 msgHandler.handeRegisterReq(socket, data.register);
             }
         }

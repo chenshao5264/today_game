@@ -17,7 +17,6 @@ var socket_service;
         io.on('connection', function (socket) {
             logger_1.logger.info(utility_1.address2ip(socket.handshake.address) + '连接服务器');
             socket.on('message', function (data) {
-                //console.log(data);
                 let msg = socket_protobufjs_1.protobufjs.decode(data);
                 delegate.message(socket, msg);
             });

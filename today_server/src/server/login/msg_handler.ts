@@ -3,25 +3,27 @@ import { logger } from './../../utils/logger';
 import { protobufjs } from './../common/socket_protobufjs';
 
 function sendMsgAck(socket: SocketIO.Socket, packet) {
-    
-    console.log(packet);
+    packet = protobufjs.encode(packet);
     socket.emit('message', packet);
 }
 
-export let handeRegisterReq = function(socket: SocketIO.Socket, msg) {
-    logger.trace("处理注册请求111");
-
-    logger.info(msg);
-
+function packRegisterMsg(msgid: number, errcode: number) {
     let packet: any = {};
-    packet.msgid = protocol.LC_REGISTER_ACK;
+    let body:   any = {};
 
-    let body: any = {};
-    body.errcode = 0;
-
+    packet.msgid    = msgid;
+    body.errcode    = errcode;
     packet.register = body;
 
-    packet = protobufjs.encode(packet);
+    return packet;
+}
+
+export let handeRegisterReq = function(socket: SocketIO.Socket, msg) {
+    logger.trace("处理注册请求");
+
+    
+    let packet = packRegisterMsg(protocol.P_LC_REGISTER_ACK, 0)
+
     sendMsgAck(socket, packet);
 
 }

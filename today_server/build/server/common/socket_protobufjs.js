@@ -24,7 +24,8 @@ var protobufjs;
     };
     protobufjs.decode = function (buffer) {
         let protoMsg = root.lookupType('base.MessagePkg');
-        let msg = protoMsg.decode(formatBuffer(buffer));
+        buffer = formatBuffer(buffer);
+        let msg = protoMsg.decode(buffer);
         return msg;
     };
 })(protobufjs = exports.protobufjs || (exports.protobufjs = {}));

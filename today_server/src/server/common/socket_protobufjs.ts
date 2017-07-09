@@ -1,8 +1,6 @@
 import protojs = require('protobufjs');
 import { logger } from './../../utils/logger';
 
-import { protocol, msgid2proto } from './socket_protocol';
-
 let root = protojs.loadSync('../../../proto/base.proto');
 
 
@@ -31,7 +29,8 @@ export module protobufjs {
 
     export let decode = function(buffer: any) {
         let protoMsg = root.lookupType('base.MessagePkg');
-        let msg      = protoMsg.decode(formatBuffer(buffer));
+        buffer = formatBuffer(buffer);
+        let msg      = protoMsg.decode(buffer);
         return msg;
     }
 }

@@ -4,17 +4,19 @@ const socket_protocol_1 = require("./../common/socket_protocol");
 const logger_1 = require("./../../utils/logger");
 const socket_protobufjs_1 = require("./../common/socket_protobufjs");
 function sendMsgAck(socket, packet) {
-    console.log(packet);
+    packet = socket_protobufjs_1.protobufjs.encode(packet);
     socket.emit('message', packet);
 }
-exports.handeRegisterReq = function (socket, msg) {
-    logger_1.logger.trace("处理注册请求111");
-    logger_1.logger.info(msg);
+function packRegisterMsg(msgid, errcode) {
     let packet = {};
-    packet.msgid = socket_protocol_1.protocol.LC_REGISTER_ACK;
     let body = {};
-    body.errcode = 0;
+    packet.msgid = msgid;
+    body.errcode = errcode;
     packet.register = body;
-    packet = socket_protobufjs_1.protobufjs.encode(packet);
+    return packet;
+}
+exports.handeRegisterReq = function (socket, msg) {
+    logger_1.logger.trace("处理注册请求");
+    let packet = packRegisterMsg(socket_protocol_1.protocol.P_LC_REGISTER_ACK, 0);
     sendMsgAck(socket, packet);
 };

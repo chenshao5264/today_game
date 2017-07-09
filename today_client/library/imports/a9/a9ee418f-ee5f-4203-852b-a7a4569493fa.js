@@ -46,7 +46,7 @@ cc.Class({
         self.labelTips.string = "正在注册...";
 
         var packet = {};
-        packet.msgid = protocol.CL_REGISTER_REQ;
+        packet.msgid = protocol.P_CL_REGISTER_REQ;
 
         var body = {};
         body.nickname = self.ebxNickname.string;
@@ -54,7 +54,7 @@ cc.Class({
         body.pwd = self.ebxPasswrod.string;
         packet.register = body;
 
-        smsg.on(protocol.LC_REGISTER_ACK, function (data) {
+        smsg.on(protocol.P_LC_REGISTER_ACK, function (data) {
             var body = data.register;
             if (body.errcode == 0) {
                 self.labelTips.string = "注册成功";

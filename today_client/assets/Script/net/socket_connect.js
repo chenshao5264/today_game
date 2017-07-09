@@ -32,6 +32,7 @@ cc.Class({
         });
 
         socket.on("message", function(data) {
+            //console.log(data);
             smsg.onMessage(data);
         });
 

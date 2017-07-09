@@ -1,7 +1,7 @@
 {
   "4734c20c-0db8-4eb2-92ea-e692f4d70934": {
-    "asset": 1499089646000,
-    "meta": 1499091510000,
+    "asset": 1499528873000,
+    "meta": 1499568966000,
     "relativePath": "Script"
   },
   "7b81d4e8-ec84-4716-968d-500ac1d78a54": {
@@ -25,8 +25,8 @@
     "relativePath": "Script/controllers"
   },
   "e61fee1e-d08c-4f1b-8fdb-b031f4ca3ab9": {
-    "asset": 1499176082000,
-    "meta": 1499353625000,
+    "asset": 1499517419000,
+    "meta": 1499568966000,
     "relativePath": "Script/net"
   },
   "f8e6b000-5643-4b86-9080-aa680ce1f599": {
@@ -290,8 +290,8 @@
     "relativePath": "Prefab/button_green.prefab"
   },
   "fd2514cf-2290-4e62-bb58-3f5007eaf4a0": {
-    "asset": 1498747574000,
-    "meta": 1498750038000,
+    "asset": 1499528873000,
+    "meta": 1499568966000,
     "relativePath": "Scene"
   },
   "3219ebed-d874-4620-8998-2471cd96f7bd": {
@@ -340,8 +340,8 @@
     "relativePath": "Script/common"
   },
   "15920a10-94fb-40b0-bc8e-ffb30c418d8e": {
-    "asset": 1499005618000,
-    "meta": 1499091510000,
+    "asset": 1499528873000,
+    "meta": 1499568966000,
     "relativePath": "resources"
   },
   "692c78cc-f4ab-437b-adfa-eeda2bed12d6": {
@@ -350,8 +350,8 @@
     "relativePath": "Script/protocol"
   },
   "a23fd0b8-3e30-41e0-91a4-3eaf717facec": {
-    "asset": 1498974977000,
-    "meta": 1499091510000,
+    "asset": 1499522167000,
+    "meta": 1499568966000,
     "relativePath": "resources/proto"
   },
   "940b9a32-2057-4c43-8bdd-d2027b118832": {
@@ -364,39 +364,44 @@
     "meta": 1499089821000,
     "relativePath": "Script/test/exports_test.js"
   },
-  "b7c25470-eb7b-4990-8975-55d3ae479a2b": {
-    "asset": 1499093225000,
-    "meta": 1498974977000,
-    "relativePath": "resources/proto/login.proto"
-  },
   "9b14206b-6a19-41d9-9731-75935f3fb89e": {
     "asset": 1499176078000,
     "meta": 1499176082000,
     "relativePath": "Script/components/AppStart.js"
   },
-  "96c541a1-6d3c-4862-b1b6-751e315f76a8": {
-    "asset": 1499175976000,
-    "meta": 1499176082000,
-    "relativePath": "Script/net/socket_connect.js"
+  "b7c25470-eb7b-4990-8975-55d3ae479a2b": {
+    "asset": 1499521376000,
+    "meta": 1498974977000,
+    "relativePath": "resources/proto/login.proto"
   },
   "503147a5-fde9-458c-9081-61e99c24f18e": {
-    "asset": 1499170373000,
-    "meta": 1499176082000,
+    "asset": 1499522949000,
+    "meta": 1499568622000,
     "relativePath": "Script/net/protocol.js"
   },
+  "96c541a1-6d3c-4862-b1b6-751e315f76a8": {
+    "asset": 1499524610000,
+    "meta": 1499568622000,
+    "relativePath": "Script/net/socket_connect.js"
+  },
   "dec92f8d-338c-4a5f-9b2f-e4e0a28c7d11": {
-    "asset": 1499176144000,
-    "meta": 1499176145000,
+    "asset": 1499529457000,
+    "meta": 1499568622000,
     "relativePath": "Script/net/socket_protobufjs.js"
   },
+  "ed5a4e3b-9ad2-43e4-8604-af02d67c5e0b": {
+    "asset": 1499568760000,
+    "meta": 1499522167000,
+    "relativePath": "resources/proto/base.proto"
+  },
   "a9ee418f-ee5f-4203-852b-a7a4569493fa": {
-    "asset": 1499176189000,
-    "meta": 1499176193000,
+    "asset": 1499569598000,
+    "meta": 1499569602000,
     "relativePath": "Script/controllers/LoginController.js"
   },
   "423a28fe-ac77-487b-acf4-0a5386d66073": {
-    "asset": 1499517419000,
-    "meta": 1499518379000,
+    "asset": 1499569554000,
+    "meta": 1499569602000,
     "relativePath": "Script/net/socket_msg.js"
   }
 }

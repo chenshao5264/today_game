@@ -17,7 +17,7 @@ export module socket_delegate {
     export let message = function (socket: SocketIO.Socket, data: any) {
         switch(data.msgid) {
             case protocol.CL_REGISTER_REQ: {
-                msgHandler.handeRegisterReq(socket, data);
+                msgHandler.handeRegisterReq(socket, data.register);
             }
         }
     }

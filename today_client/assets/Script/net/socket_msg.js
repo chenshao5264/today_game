@@ -1,6 +1,5 @@
 
 var protobufjs = require("./socket_protobufjs");
-var msgid2proto = require("./protocol").msgid2proto;
 var sockets = {};
 
 var URL_LOGIN = "ws://127.0.0.1:9100";
@@ -13,15 +12,12 @@ var handleQueue = function() {
         _isHandling = true;
         setInterval(function() {
             if (msgQueue.length > 0) {
-                console.log("msgQueue.length: " + msgQueue.length)
                 var msg = msgQueue.shift();
-
-                var eventname = msgid2proto[msg.id]
-                if (eventname) {
-                    var listener = listeners[eventname]
-                    if (listener) {
-                        listener(msg);
-                    }
+                console.log("hande msgid = " + msg.msgid);
+                
+                var listener = listeners[msg.msgid];
+                if (listener) {
+                    listener(msg);
                 }
             }
         }, 1000)
@@ -32,14 +28,14 @@ var listeners = {}
 
 cc.Class({
     statics: {
-        on: function(eventname, listener) {
-            if (listeners[eventname] == null) {
-                listeners[eventname] = listener;
+        on: function(eventid, listener) {
+            if (listeners[eventid] == null) {
+                listeners[eventid] = listener;
             }
         },
-        off: function(eventname) {
-            if (listeners[eventname]) {
-                listeners[eventname] = null;
+        off: function(eventid) {
+            if (listeners[eventid]) {
+                listeners[eventid] = null;
             }
         },
         closeSocket: function(stage) {
@@ -63,20 +59,26 @@ cc.Class({
             sockets.login = null;
         },
         onMessage: function(data) {
-            console.log(data);
+            // console.log(data);
             // start 适配
-            var buffer = data.buffer;
-            var bufferArray = Object.keys(buffer).map(function(k) {
-                return buffer[k];
-            });
+            // var buffer = data;
+            // var bufferArray = Object.keys(buffer).map(function(k) {
+            //     return buffer[k];
+            // });
+            //let bufferArray = Array.apply([], data);
+            let bufferArray = new Uint8Array(data);
+            //console.log(bufferArray);
             // end 适配
 
-            var msg = protobufjs.decode(data.msgid, bufferArray);
-            msg.id = data.msgid;
+            var msg = protobufjs.decode(bufferArray);
+
+            console.log(msg);
+
             msgQueue.push(msg);
         },
-        send: function(msgid, rawData) {
+        send: function(packet) {
             var socket = null;
+            let msgid = packet.msgid;
             if (msgid >= 100 && msgid < 500) {
                 socket = sockets.login;
             }
@@ -86,8 +88,11 @@ cc.Class({
                 return;
             }
 
-            var buffer = protobufjs.encode(msgid, rawData);
-            socket.emit("message", {msgid: msgid, buffer: buffer});
+            console.log(packet);
+
+            var buffer = protobufjs.encode(packet);
+            console.log(buffer);
+            socket.emit("message", buffer);
         }
     }
 });

@@ -344,3 +344,54 @@
 [2017-07-04 21:50:14.965] [INFO] normal - 192.168.0.109 连接服务器
 [2017-07-04 21:50:17.249] [TRACE] normal - 处理注册请求
 [2017-07-04 21:50:17.250] [INFO] normal - register { account: 'chenshao01', password: 'chb123', nickname: '' }
+[2017-07-09 10:41:21.513] [INFO] normal - 服务器启动: 9100
+[2017-07-09 10:41:26.974] [INFO] normal - 127.0.0.1 连接服务器
+[2017-07-09 10:41:33.257] [WARN] normal - socket error: TypeError: Cannot convert undefined or null to object
+[2017-07-09 10:41:33.259] [INFO] normal - socket disconnect: client error
+[2017-07-09 10:41:33.259] [INFO] normal - 127.0.0.1 断开服务器
+[2017-07-09 10:42:43.124] [INFO] normal - 服务器启动: 9100
+[2017-07-09 10:42:48.469] [INFO] normal - 127.0.0.1 连接服务器
+[2017-07-09 10:42:50.771] [WARN] normal - socket error: TypeError: Cannot convert undefined or null to object
+[2017-07-09 10:42:50.773] [INFO] normal - socket disconnect: client error
+[2017-07-09 10:42:50.774] [INFO] normal - 127.0.0.1 断开服务器
+[2017-07-09 10:43:25.524] [INFO] normal - 服务器启动: 9100
+[2017-07-09 10:43:27.869] [INFO] normal - 127.0.0.1 连接服务器
+[2017-07-09 10:43:30.732] [WARN] normal - socket error: TypeError: Cannot convert undefined or null to object
+[2017-07-09 10:43:30.733] [INFO] normal - socket disconnect: client error
+[2017-07-09 10:43:30.733] [INFO] normal - 127.0.0.1 断开服务器
+[2017-07-09 10:45:00.882] [INFO] normal - 服务器启动: 9100
+[2017-07-09 10:45:03.210] [INFO] normal - 127.0.0.1 连接服务器
+[2017-07-09 10:45:40.983] [INFO] normal - socket disconnect: transport close
+[2017-07-09 10:45:40.984] [INFO] normal - 127.0.0.1 断开服务器
+[2017-07-09 10:45:42.669] [INFO] normal - 127.0.0.1 连接服务器
+[2017-07-09 10:47:03.882] [INFO] normal - socket disconnect: transport close
+[2017-07-09 10:47:03.883] [INFO] normal - 127.0.0.1 断开服务器
+[2017-07-09 10:47:05.762] [INFO] normal - 127.0.0.1 连接服务器
+[2017-07-09 10:47:09.447] [INFO] normal - 服务器启动: 9100
+[2017-07-09 10:47:13.024] [INFO] normal - 127.0.0.1 连接服务器
+[2017-07-09 10:47:15.604] [WARN] normal - socket error: TypeError: Cannot convert undefined or null to object
+[2017-07-09 10:47:15.605] [INFO] normal - socket disconnect: client error
+[2017-07-09 10:47:15.606] [INFO] normal - 127.0.0.1 断开服务器
+[2017-07-09 10:48:31.939] [INFO] normal - 127.0.0.1 连接服务器
+[2017-07-09 10:48:36.081] [WARN] normal - socket error: TypeError: Cannot convert undefined or null to object
+[2017-07-09 10:48:36.082] [INFO] normal - socket disconnect: client error
+[2017-07-09 10:48:36.083] [INFO] normal - 127.0.0.1 断开服务器
+[2017-07-09 10:49:01.305] [INFO] normal - 127.0.0.1 连接服务器
+[2017-07-09 10:49:33.875] [INFO] normal - socket disconnect: transport close
+[2017-07-09 10:49:33.876] [INFO] normal - 127.0.0.1 断开服务器
+[2017-07-09 10:49:36.495] [INFO] normal - 服务器启动: 9100
+[2017-07-09 10:49:40.889] [INFO] normal - 127.0.0.1 连接服务器
+[2017-07-09 10:49:43.894] [WARN] normal - socket error: TypeError: Cannot convert undefined or null to object
+[2017-07-09 10:49:43.895] [INFO] normal - socket disconnect: client error
+[2017-07-09 10:49:43.895] [INFO] normal - 127.0.0.1 断开服务器
+[2017-07-09 10:51:00.916] [INFO] normal - 服务器启动: 9100
+[2017-07-09 10:51:17.692] [INFO] normal - 127.0.0.1 连接服务器
+[2017-07-09 10:51:27.778] [WARN] normal - socket error: TypeError: Cannot convert undefined or null to object
+[2017-07-09 10:51:27.780] [INFO] normal - socket disconnect: client error
+[2017-07-09 10:51:27.781] [INFO] normal - 127.0.0.1 断开服务器
+[2017-07-09 10:52:25.444] [INFO] normal - 服务器启动: 9100
+[2017-07-09 10:52:44.888] [INFO] normal - 服务器启动: 9100
+[2017-07-09 10:52:57.996] [INFO] normal - 127.0.0.1 连接服务器
+[2017-07-09 10:53:01.387] [WARN] normal - socket error: TypeError: Cannot convert undefined or null to object
+[2017-07-09 10:53:01.388] [INFO] normal - socket disconnect: client error
+[2017-07-09 10:53:01.388] [INFO] normal - 127.0.0.1 断开服务器

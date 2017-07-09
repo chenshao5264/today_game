@@ -28,6 +28,7 @@ export module socket_service {
             logger.info(address2ip(socket.handshake.address) + '连接服务器');
 
             socket.on('message', function(data: any) {
+                //console.log(data);
                 let msg = protobufjs.decode(data);
                 delegate.message(socket, msg);
             });

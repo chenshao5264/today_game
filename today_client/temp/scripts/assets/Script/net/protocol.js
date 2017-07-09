@@ -4,10 +4,6 @@ cc._RF.push(module, '50314el/elFjJCBYemcJPGO', 'protocol');
 
 "use strict";
 
-var _msgid2proto;
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 var protocol = {
     // login
     LOGIN_START: 100,
@@ -21,9 +17,6 @@ var protocol = {
     SC_LOGIN_ACK: 501
 };
 
-var msgid2proto = (_msgid2proto = {}, _defineProperty(_msgid2proto, protocol.CL_REGISTER_REQ, "login.register"), _defineProperty(_msgid2proto, protocol.LC_REGISTER_ACK, "login.register"), _msgid2proto);
-
 exports.protocol = protocol;
-exports.msgid2proto = msgid2proto;
 
 cc._RF.pop();

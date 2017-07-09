@@ -12,9 +12,3 @@ export let msgid2proto: {[key: number]: string} = {
     [protocol.CL_REGISTER_REQ]: 'login.register',
     [protocol.LC_REGISTER_ACK]: 'login.register'
 }
-
-// 收到的网络包
-export interface NetPackage {
-    msgid:  number,
-    buffer: any,
-}

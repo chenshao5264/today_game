@@ -11,12 +11,6 @@ var protocol = {
     SC_LOGIN_ACK: 501
 }
 
-var msgid2proto = {
-    [protocol.CL_REGISTER_REQ]: "login.register",
-    [protocol.LC_REGISTER_ACK]: "login.register"
-}
-
 
 exports.protocol    = protocol
-exports.msgid2proto = msgid2proto
 

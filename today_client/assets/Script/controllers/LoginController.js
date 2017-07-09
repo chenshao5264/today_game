@@ -3,7 +3,6 @@ var config = require("../config");
 
 var smsg        = require("../net/socket_msg")
 var protocol    = require("../net/protocol").protocol;
-var msgid2proto = require("../net/protocol").msgid2proto;
 
 cc.Class({
     extends: cc.Component,
@@ -40,18 +39,22 @@ cc.Class({
         var self = this;
         self.labelTips.string = "正在注册..."
 
-        var nickname = self.ebxNickname.string;
-        var account  = self.ebxAccount.string;
-        var pwd      = self.ebxPasswrod.string;
+        let packet = {}
+        packet.msgid = protocol.CL_REGISTER_REQ;
 
-        var rawData = {account: account, password: pwd, nickname: nickname}
+        let body = {}
+        body.nickname = self.ebxNickname.string;
+        body.account  = self.ebxAccount.string;
+        body.pwd      = self.ebxPasswrod.string;
+        packet.register   = body;
 
-        smsg.on(msgid2proto[protocol.CL_REGISTER_REQ], function(data) {
-            if (data.errcode == 0) {
+        smsg.on(protocol.LC_REGISTER_ACK, function(data) {
+            let body = data.register;
+            if (body.errcode == 0) {
                 self.labelTips.string = "注册成功";
             }
         });
-        smsg.send(protocol.CL_REGISTER_REQ, rawData);
+        smsg.send(packet);
     },
 
     onBtnLogin: function(event, data) {

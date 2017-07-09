@@ -1,51 +1,44 @@
 var protobufjs = require("protobufjs");
-var msgid2proto = require("./protocol").msgid2proto;
 
-var protos = {
-    "login": "resources/proto/login.proto"
+let _root = null;
+
+function formatBuffer(buffer) {
+    let bufferArray = Object.keys(buffer).map(function(k) {
+        console.log(buffer[k]);
+        return buffer[k];
+    })
+    return buffer
 }
-
-var roots = {}
-
-function root_msgid(msgid) {
-    if (msgid >= 100 && msgid < 500) {
-        return roots.login;
-    } else {
-
-    }
-} 
 
 cc.Class({
     statics: {
         load: function() {
-            for (var key in protos) {
-                protobufjs.load(cc.url.raw(protos[key]), function(err, root) {
-                    if (err) {
-                        console.log(err);
-                        return;
-                    }
-
-                    roots[key] = root;
-                }) 
-            }
+            protobufjs.load(cc.url.raw('resources/proto/base.proto'), function(err, root) {
+                if (err) {
+                    console.log(err);
+                    return;
+                }
+                console.log("load proto successful!");
+                _root = root;
+            }) 
         },
-        encode: function(msgid, rawMsg) {
-            var protoMsg = root_msgid(msgid).lookupType(msgid2proto[msgid]);
-
-            var errMsg = protoMsg.verify(rawMsg);
+        encode: function(payload) {
+            let protoMsg = _root.lookupType('base.MessagePkg');
+            let errMsg   = protoMsg.verify(payload);
             if (errMsg) {
-                console.log(errMsg);
+                logger.error(errMsg);
                 return [];
             }
-
-            var msg = protoMsg.create(rawMsg);
-            var buffer = protoMsg.encode(msg).finish();
-
+            let msg    = protoMsg.create(payload);
+            let buffer = protoMsg.encode(msg).finish();
             return buffer;
         },
-        decode: function(msgid, bufferArray) {
-            var protoMsg = root_msgid(msgid).lookupType(msgid2proto[msgid]);
-            var msg = protoMsg.decode(bufferArray);
+        decode: function(buffer) {
+            let protoMsg = _root.lookupType('base.MessagePkg');
+            console.log(buffer);
+            //buffer = formatBuffer(buffer)
+           // console.log(buffer);
+            let msg      = protoMsg.decode(buffer);
             return msg;
         }
     }

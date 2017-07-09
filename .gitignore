@@ -61,9 +61,9 @@ typings/
 #/////////////////////////////////////////////////////////////////////////////
 # Fireball Projects
 #/////////////////////////////////////////////////////////////////////////////
-**/library/
-**//temp/
-**//local/
+today_client/library/*
+today_client/temp/*
+today_client/local/*
 
 library/
 temp/
@@ -128,4 +128,4 @@ quick_gen_project_*_autogen.sh.meta
 
 .vscode/
 
-today_client/library/
+

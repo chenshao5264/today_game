@@ -1,7 +1,6 @@
 import { address2ip } from './../../utils/utility';
 import { ip_port } from './../../config';
 import { logger } from './../../utils/logger';
-import { protobufjs } from './../common/socket_protobufjs';
 
 import express  = require('express');
 import http     = require('http');
@@ -27,8 +26,7 @@ export module socket_service {
             logger.info(address2ip(socket.handshake.address) + '连接服务器');
 
             socket.on('message', function(data: any) {
-                let msg = protobufjs.decode(data);
-                delegate.message(socket, msg);
+                delegate.message(socket, data);
             });
 
             socket.on('disconnect', function(data: any) {

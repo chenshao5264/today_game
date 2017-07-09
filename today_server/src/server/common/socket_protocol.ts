@@ -8,15 +8,3 @@ export let protocol = {
     P_LOGIN_END:       500
 }
 
-export interface MsgPacket {
-    msgid: number;
-
-    register?: ReigsterBody;
-}
-
-export interface ReigsterBody {
-    errcode?: number;
-    account?:  string;
-    password?: string;
-    nickname?: string;
-}

@@ -17,6 +17,8 @@ var socket_delegate;
             case socket_protocol_1.protocol.P_CL_REGISTER_REQ: {
                 msgHandler.handeRegisterReq(socket, data.register);
             }
+            default: {
+            }
         }
     };
 })(socket_delegate = exports.socket_delegate || (exports.socket_delegate = {}));

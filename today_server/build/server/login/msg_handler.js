@@ -7,16 +7,17 @@ function sendMsgAck(socket, packet) {
     packet = socket_protobufjs_1.protobufjs.encode(packet);
     socket.emit('message', packet);
 }
-function packRegisterMsg(msgid, errcode) {
+function packRegisterMsg(msgid, body) {
     let packet = {};
-    let body = {};
     packet.msgid = msgid;
-    body.errcode = errcode;
     packet.register = body;
     return packet;
 }
 exports.handeRegisterReq = function (socket, msg) {
     logger_1.logger.trace("处理注册请求");
-    let packet = packRegisterMsg(socket_protocol_1.protocol.P_LC_REGISTER_ACK, 0);
+    let ret = 0;
+    // todo
+    //
+    let packet = packRegisterMsg(socket_protocol_1.protocol.P_LC_REGISTER_ACK, { errcode: ret });
     sendMsgAck(socket, packet);
 };

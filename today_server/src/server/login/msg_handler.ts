@@ -1,4 +1,5 @@
-import { protocol } from './../common/socket_protocol';
+import { error } from './socket_delegate';
+import { protocol, MsgPacket } from './../common/socket_protocol';
 import { logger } from './../../utils/logger';
 import { protobufjs } from './../common/socket_protobufjs';
 
@@ -7,12 +8,10 @@ function sendMsgAck(socket: SocketIO.Socket, packet) {
     socket.emit('message', packet);
 }
 
-function packRegisterMsg(msgid: number, errcode: number) {
-    let packet: any = {};
-    let body:   any = {};
+function packRegisterMsg(msgid: number, body: any) {
 
+    let packet: MsgPacket = {};
     packet.msgid    = msgid;
-    body.errcode    = errcode;
     packet.register = body;
 
     return packet;
@@ -21,9 +20,12 @@ function packRegisterMsg(msgid: number, errcode: number) {
 export let handeRegisterReq = function(socket: SocketIO.Socket, msg) {
     logger.trace("处理注册请求");
 
-    
-    let packet = packRegisterMsg(protocol.P_LC_REGISTER_ACK, 0)
+    let ret = 0;
 
+    // todo
+
+    //
+
+    let packet = packRegisterMsg(protocol.P_LC_REGISTER_ACK, {errcode: ret})
     sendMsgAck(socket, packet);
-
 }

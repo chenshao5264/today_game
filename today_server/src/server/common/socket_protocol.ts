@@ -7,3 +7,16 @@ export let protocol = {
     P_LC_LOGIN_ACK:    103,
     P_LOGIN_END:       500
 }
+
+export interface MsgPacket {
+    msgid: number;
+
+    register?: ReigsterBody;
+}
+
+export interface ReigsterBody {
+    errcode?: number;
+    account?:  string;
+    password?: string;
+    nickname?: string;
+}

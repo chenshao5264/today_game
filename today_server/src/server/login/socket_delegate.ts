@@ -18,6 +18,10 @@ export module socket_delegate {
             case protocol.P_CL_REGISTER_REQ: {
                 msgHandler.handeRegisterReq(socket, data.register);
             }
+
+            default: {
+                
+            }
         }
     }
 }

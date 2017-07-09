@@ -1,6 +1,6 @@
 import { login_server } from './../../config';
-import { socket_service } from './../common/socket_service';
+import { SocketService } from './../common/socket_service';
 import { socket_delegate } from './socket_delegate';
 
-
-socket_service.start(login_server(), socket_delegate);
+let socketService = new SocketService(login_server(), socket_delegate);
+socketService.start();

@@ -5,12 +5,12 @@ const logger_1 = require("./../../utils/logger");
 const express = require("express");
 const http = require("http");
 const socketio = require("socket.io");
-let app = express();
-let server = http.createServer(app);
-let io = socketio(server);
 var socket_service;
 (function (socket_service) {
     socket_service.start = function (config, delegate) {
+        let app = express();
+        let server = http.createServer(app);
+        let io = socketio(server);
         server.listen(config.port);
         logger_1.logger.info('服务器启动: ' + config.port);
         io.on('connection', function (socket) {

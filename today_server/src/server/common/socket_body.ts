@@ -2,7 +2,7 @@ export interface MsgPacket {
     msgid: number;
 
     register?: ReigsterBody;
-    login?: LoginBody;
+    login?:    LoginBody;
 }
 
 export interface ReigsterBody {

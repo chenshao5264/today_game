@@ -4,7 +4,7 @@
   "description": "server_sample",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "run": "node ./build/server/login/app"
   },
   "author": "",
   "license": "ISC",

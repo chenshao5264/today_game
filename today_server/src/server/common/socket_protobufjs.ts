@@ -3,7 +3,6 @@ import { logger } from './../../utils/logger';
 
 let root = protojs.loadSync('../../../proto/base.proto');
 
-
 function formatBuffer(buffer) {
     var bufferArray = Object.keys(buffer).map(function(k) {
         return buffer[k];

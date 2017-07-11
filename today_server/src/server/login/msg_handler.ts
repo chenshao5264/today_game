@@ -22,7 +22,8 @@ function packRegisterMsg(msgid: number, body: BodyType.ReigsterBody) {
     return packet;
 }
 
-export let handeRegisterReq = function(socket: SocketIO.Socket, msg: BodyType.ReigsterBody) {
+export let MsgHandle = {};
+MsgHandle[protocol.P_CL_REGISTER_REQ] = function(socket: SocketIO.Socket, msg: BodyType.ReigsterBody) {
     logger.trace("处理注册请求");
 
     let ret = 0;
@@ -32,9 +33,18 @@ export let handeRegisterReq = function(socket: SocketIO.Socket, msg: BodyType.Re
     //
 
     let packet = packRegisterMsg(protocol.P_LC_REGISTER_ACK, {errcode: ret})
-    sendMsgAck(socket, packet);    
+    sendMsgAck(socket, packet);   
 }
 
-export let handeLoginReq = function(socket: SocketIO.Socket, msg) {
+// export let handeRegisterReq = function(socket: SocketIO.Socket, msg: BodyType.ReigsterBody) {
+//     logger.trace("处理注册请求");
 
-}
+//     let ret = 0;
+
+//     // todo
+
+//     //
+
+//     let packet = packRegisterMsg(protocol.P_LC_REGISTER_ACK, {errcode: ret})
+//     sendMsgAck(socket, packet);    
+// }

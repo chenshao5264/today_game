@@ -3,7 +3,10 @@ import { logger } from './../../utils/logger';
 import { address2ip } from './../../utils/utility';
 import { protobufjs } from './../common/socket_protobufjs';
 
-import msgHandler = require('./msg_handler')
+//import msgHandler = require('./msg_handler')
+
+import { MsgHandle } from './msg_handler';
+
 
 export module socket_delegate {
     export let disconnect = function(socket: SocketIO.Socket, data: any) {
@@ -18,18 +21,20 @@ export module socket_delegate {
 
         let msg = protobufjs.decode(data);
 
-        switch(msg.msgid) {
-            case protocol.P_CL_REGISTER_REQ: {
-                msgHandler.handeRegisterReq(socket, msg.register);
-            }
-            case protocol.P_CL_LOGIN_REQ: {
+        MsgHandle[msg.msgid](socket, msg.register);
 
-            }
+        // switch(msg.msgid) {
+        //     case protocol.P_CL_REGISTER_REQ: {
+        //         msgHandler.handeRegisterReq(socket, msg.register);
+        //     }
+        //     case protocol.P_CL_LOGIN_REQ: {
 
-            default: {
+        //     }
 
-            }
-        }
+        //     default: {
+
+        //     }
+        // }
     }
 }
 

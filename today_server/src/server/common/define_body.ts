@@ -6,14 +6,25 @@ export interface MsgPacket {
 }
 
 export interface ReigsterBody {
-    errcode?: number;
+    errcode?:  number;
     account?:  string;
     password?: string;
     nickname?: string;
 }
 
 export interface LoginBody {
-    errcode?: number;
+    errcode?:  number;
     account?:  string;
     password?: string;
+}
+
+export interface AccountBody {
+    account?: string;
+    password?: string;
+}
+
+export interface UserBody {
+    account?:  string;
+    nickname?: string;
+    gems?:     number;
 }

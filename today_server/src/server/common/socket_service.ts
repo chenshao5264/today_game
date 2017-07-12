@@ -29,7 +29,7 @@ export class SocketService {
         let io     = socketio(server);
 
         server.listen(this._config.port);
-        logger.info('服务器启动: ' + this._config.port);
+        
 
         io.on('connection', function(socket: SocketIO.Socket) {
             logger.info(address2ip(socket.handshake.address) + '连接服务器');
@@ -39,12 +39,10 @@ export class SocketService {
             });
 
             socket.on('disconnect', function(data: any) {
-                logger.info('ocket disconnect: ' + data);
                 self._delegate.disconnect(socket, data);
             });
 
             socket.on('error', function(data: any) {
-                logger.warn('socket error: ' + data);
                 self._delegate.error(socket, data);
             });
         })

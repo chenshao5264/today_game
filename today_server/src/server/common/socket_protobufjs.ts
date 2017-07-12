@@ -1,7 +1,7 @@
 import protojs = require('protobufjs');
 import { logger } from './../../utils/logger';
 
-let root = protojs.loadSync('../../../proto/base.proto');
+let root = protojs.loadSync(__dirname + '../../../../proto/base.proto');
 
 function formatBuffer(buffer) {
     var bufferArray = Object.keys(buffer).map(function(k) {

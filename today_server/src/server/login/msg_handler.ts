@@ -3,7 +3,8 @@ import { logger } from '../../utils/logger';
 import { protobufjs } from '../common/socket_protobufjs';
 import { address2ip } from './../../utils/utility';
 
-import BodyType = require('../common/socket_body')
+import BodyType = require('../common/define_body');
+import db = require('../../tools/db');
 
 function sendMsgAck(socket: SocketIO.Socket, packet) {
     if (socket.connected) {
@@ -22,29 +23,94 @@ function packRegisterMsg(msgid: number, body: BodyType.ReigsterBody) {
     return packet;
 }
 
-export let MsgHandle = {};
-MsgHandle[protocol.P_CL_REGISTER_REQ] = function(socket: SocketIO.Socket, msg: BodyType.ReigsterBody) {
+export let MsgHandler = {};
+MsgHandler[protocol.P_CL_REGISTER_REQ] = function(socket: SocketIO.Socket, msg: BodyType.MsgPacket) {
     logger.trace("处理注册请求");
+    let body: BodyType.ReigsterBody = msg.register;
 
-    let ret = 0;
+    async function async_is_account_exsit(account: string): Promise<boolean> {
+         return new Promise<boolean>((resolve, reject) => {
+            db.is_account_exsit(account, function(exist) {
+                resolve(exist);
+            }); 
+        });
+    }
+
+    async function async_create_account(account: string, password: string): Promise<boolean> {
+         return new Promise<boolean>((resolve, reject) => {
+            db.create_account(account, password, function(suc) {
+                resolve(suc);
+            }) 
+        });
+    }
+
+    async function async_create_user(parms: BodyType.UserBody): Promise<boolean> {
+         return new Promise<boolean>((resolve, reject) => {
+            db.create_user(parms, function(suc) {
+                resolve(suc);
+            }) 
+        });
+    }
+
+    let ret = -1;
+    async function async_register(account: string, password: string) {
+        let exist = await async_is_account_exsit(account);
+        console.log("exist = " + exist);
+        if (exist) {
+            ret = 1;
+        } else {
+            let suc = await async_create_account(account, password);
+            if (suc) {
+                ret = 0;
+                let succ = await async_create_user({account: account, nickname: '辰少01', gems: 100})
+                if (succ) {
+                    logger.trace(account + '创建成功');
+                }
+            } else {
+                ret = 2;
+            }
+        }
+
+        let packet = packRegisterMsg(protocol.P_LC_REGISTER_ACK, {errcode: ret})
+        sendMsgAck(socket, packet);  
+    }
+
+    async_register(body.account, body.password);
 
     // todo
 
-    //
+    // let packet: BodyType.MsgPacket = {msgid: protocol.P_LC_REGISTER_ACK};
+    // packet.register = {};
 
-    let packet = packRegisterMsg(protocol.P_LC_REGISTER_ACK, {errcode: ret})
-    sendMsgAck(socket, packet);   
+    // db.is_account_exsit(body.account, function(exist) {
+    //     if (exist) {
+    //         packet.register = {errcode: 1};
+    //         sendMsgAck(socket, packet);  
+    //     } else {
+    //         db.create_account(body.account, body.password, function(suc) {
+    //             let ret
+    //             if (suc) {
+    //                 ret = 0;
+    //             } else {
+    //                 ret = 2;
+    //             }
+
+    //             packet.register = {errcode: ret};
+    //             sendMsgAck(socket, packet);  
+    //         })
+    //     }
+    // });
 }
 
-// export let handeRegisterReq = function(socket: SocketIO.Socket, msg: BodyType.ReigsterBody) {
-//     logger.trace("处理注册请求");
+MsgHandler[protocol.P_CL_LOGIN_REQ] = function(socket: SocketIO.Socket, msg: BodyType.MsgPacket) {
+    logger.trace("处理登路请求");
+    let body: BodyType.LoginBody = msg.login;
 
-//     let ret = 0;
-
-//     // todo
-
-//     //
-
-//     let packet = packRegisterMsg(protocol.P_LC_REGISTER_ACK, {errcode: ret})
-//     sendMsgAck(socket, packet);    
-// }
+    let pwd = db.get_account_info(body.account, function(info: BodyType.AccountBody) {
+        if (info.password == body.password) {
+            logger.trace('验证成功')
+        } else {
+            logger.trace('验证失败')
+        }
+    })
+}

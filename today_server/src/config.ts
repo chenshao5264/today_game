@@ -27,3 +27,10 @@ export let login_server = function(): ip_port {
         port: 9100,
     };
 }
+
+export let lobby_server = function(): ip_port {
+    return {
+        ip: "127.0.0.1",
+        port: 9200,
+    };
+}

@@ -2,6 +2,7 @@ import { protocol } from '../common/socket_protocol';
 import { logger } from '../../utils/logger';
 import { protobufjs } from '../common/socket_protobufjs';
 import { address2ip } from './../../utils/utility';
+import { md5 } from "../../utils/crypto";
 
 import BodyType = require('../common/define_body');
 import db = require('../../tools/db');
@@ -71,7 +72,11 @@ MsgHandler[protocol.P_CL_REGISTER_REQ] = function(socket: SocketIO.Socket, msg: 
             }
         }
 
-        let packet = packRegisterMsg(protocol.P_LC_REGISTER_ACK, {errcode: ret})
+        let packet: BodyType.MsgPacket = {msgid: protocol.P_LC_REGISTER_ACK};
+        let body: BodyType.ReigsterBody = {};
+        body.errcode    = ret;
+        packet.register = body;
+
         sendMsgAck(socket, packet);  
     }
 
@@ -106,9 +111,13 @@ MsgHandler[protocol.P_CL_LOGIN_REQ] = function(socket: SocketIO.Socket, msg: Bod
     logger.trace("处理登路请求");
     let body: BodyType.LoginBody = msg.login;
 
-    let pwd = db.get_account_info(body.account, function(info: BodyType.AccountBody) {
+    db.get_account_info(body.account, function(info: BodyType.AccountBody) {
         if (info.password == body.password) {
             logger.trace('验证成功')
+
+            db.get_user_info(body.account, function(userinfo: BodyType.UserBody) {
+                let sign = md5(userinfo.account + body.password);
+            })
         } else {
             logger.trace('验证失败')
         }

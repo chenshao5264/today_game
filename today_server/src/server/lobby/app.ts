@@ -1,4 +1,4 @@
-import { login_server, mysql } from './../../config';
+import { lobby_server, mysql } from './../../config';
 import { SocketService } from './../common/socket_service';
 import { socket_delegate } from './socket_delegate';
 import { logger } from './../../utils/logger';
@@ -12,7 +12,7 @@ if (ret) {
 }
 
 
-let loginConfig = login_server();
-let socketService = new SocketService(loginConfig, socket_delegate);
+let config = lobby_server();
+let socketService = new SocketService(config, socket_delegate);
 socketService.start();
-logger.info('login 服务器启动: ' + loginConfig.port);
+logger.info('lobby 服务器启动: ' + config.port);

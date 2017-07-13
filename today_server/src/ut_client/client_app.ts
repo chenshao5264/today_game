@@ -2,7 +2,7 @@ import io = require('socket.io-client');
 
 import { protobufjs } from '../server/common/socket_protobufjs';
 import { protocol } from '../server/common/socket_protocol';
-import BodyType = require('../server/common/socket_body')
+import BodyType = require('../server/common/define_body')
 
 var opts = {
     'reconnection': false,

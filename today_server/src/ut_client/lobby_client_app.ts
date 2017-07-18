@@ -115,9 +115,16 @@ MSG[protocol.P_LC_ENTER_ROOM_ACK] = function(data: BodyType.BaseBody) {
 }
 
 
-MSG[protocol.P_LC_LEAVE_ROOM_NOTIFY] = function(data: BodyType.BaseBody) {
+MSG[protocol.P_LC_LEAVE_ROOM_NOT] = function(data: BodyType.BaseBody) {
     console.log(data);
     let body = data.room;
 
     console.log(body.userid +  ' 有人离开房间')
+}
+
+MSG[protocol.P_LC_START_GAME_NOT] = function(data: BodyType.BaseBody) {
+    console.log(data);
+    let body = data.gamestart;
+
+    console.log('游戏开始');
 }

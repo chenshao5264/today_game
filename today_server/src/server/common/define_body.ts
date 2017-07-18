@@ -6,10 +6,11 @@ export interface SocketIO_Socket extends SocketIO.Socket {
 export interface BaseBody {
     msgid:     number;
 
-    register?: ReigsterBody;
-    login?:    LoginBody;
-    lobby?:    LobbyBody;
-    room?:     RoomBody;
+    register?:  ReigsterBody;
+    login?:     LoginBody;
+    lobby?:     LobbyBody;
+    room?:      RoomBody;
+    gamestart?: GameStartBody;
 }
 
 export interface ReigsterBody {
@@ -58,6 +59,13 @@ export interface RoomBody {
 
     // leave ack
     userid?: number;
+}
+
+export interface GameStartBody {
+    //
+
+    // notify
+    
 }
 
 export interface AccountBody {

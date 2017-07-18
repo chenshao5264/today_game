@@ -97,7 +97,6 @@ export class DataMgr {
                      logger.info('房间状态不对 ' + room.state);
                      errcode = 4;
                 }
-                
             } else {
                 logger.info('用户状态不对: ' + user.state);
                 errcode = 1;
@@ -111,7 +110,6 @@ export class DataMgr {
                 errcode = 3;
             }
         }
-
         return errcode;
     }
 

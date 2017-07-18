@@ -21,7 +21,11 @@ export enum protocol {
     P_LC_ENTER_ROOM_ACK,
 
     P_CL_LEAVE_ROOM_REQ,
-    P_LC_LEAVE_ROOM_NOTIFY,
+    P_LC_LEAVE_ROOM_NOT,
+
+    P_CL_HAND_UP_REQ,
+    P_LC_HAND_UP_ACK,
+    P_LC_START_GAME_NOT,
     // lobby
 }
 

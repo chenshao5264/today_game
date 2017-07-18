@@ -24,8 +24,6 @@ export class User {
 	public  get socket():  BodyType.SocketIO_Socket  {
 		return this._socket;
 	}
-	
-
 
     public get roomid():    number    {
 		return this._roomid;
@@ -58,12 +56,4 @@ export class User {
 	public set isOwner(value:   boolean  ) {
 		this._isOwner = value;
 	}
-
-    // public enterRoom() {
-    //     this._state = UserSate.STATE_ROOM;
-    // }
-
-    // public leaveRoom() {
-    //     this._state = UserSate.STATE_LOBBY;
-	// }
 }

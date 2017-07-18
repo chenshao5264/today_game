@@ -119,3 +119,7 @@ MsgHandler[protocol.P_CL_ENTER_ROOM_REQ] = function(socket: BodyType.SocketIO_So
     sendMsgAck(socket, packet);
 }
 
+MsgHandler[protocol.P_CL_HAND_UP_REQ] = function(socket: BodyType.SocketIO_Socket, msg: BodyType.BaseBody) {
+    logger.trace('hand up 请求');
+
+}

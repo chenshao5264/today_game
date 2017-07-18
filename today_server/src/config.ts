@@ -34,3 +34,13 @@ export let lobby_server = function(): ip_port {
         port: 9200,
     };
 }
+
+export interface room_config {
+    min_limit?: number;
+}
+
+export let roomConfig = function(): room_config {
+    return {
+        min_limit: 2,
+    };
+}

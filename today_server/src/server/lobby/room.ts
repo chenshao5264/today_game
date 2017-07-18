@@ -3,13 +3,12 @@ import { User } from './user';
 import { UserSate, RoomrSate } from '../common/enums';
 import { MsgSender } from '../lobby/msgSender';
 import BodyType = require('../common/define_body');
-
-
+import { roomConfig } from '../../config';
 
 export class Room {
     private constructor() {
         this._count = 0;
-        this._state = RoomrSate.STATE_EMPTY;
+        this._state = RoomrSate.STATE_WAIT;
     }
     
     public static create(roomid: number, ownerid: number) {
@@ -35,7 +34,6 @@ export class Room {
 		this._state = value;
 	}
     
-
 	public get id(): number  {
 		return this._id;
 	}
@@ -60,7 +58,6 @@ export class Room {
         }
     }
 
-
     public dissolve() {
         for (let uid in this._users) {
             this.delUser(parseInt(uid));
@@ -77,6 +74,12 @@ export class Room {
 
         ++this._count;
         logger.info("房间人数 = " + this._count);
-    }
 
+        if (this._count == roomConfig().min_limit) {
+            logger.info('房间满员');
+            this._state = RoomrSate.STATE_READY;
+
+            //MsgSender.getInstance().notifyGameStart(this._users);
+        }
+    }
 }

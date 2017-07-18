@@ -6,7 +6,7 @@ log4js.configure({appenders: [
     },
     {
         type: 'file',
-        filename: 'logs/normal.log',
+        filename: __dirname + '/../../logs/normal.log',
         category: 'normal',
         level: 'TRACE'
     }

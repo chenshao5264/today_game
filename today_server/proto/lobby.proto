@@ -1,0 +1,32 @@
+package lobby;
+syntax = "proto3";
+
+message Lobby {
+    // req
+    optional int32 userid = 1;
+    optional string sign  = 2;
+
+    // ack
+    optional int32 errcode = 3;
+}
+
+message SelectGame {
+    // req
+    optional int32 gameid = 1;
+
+    // ack
+    optional int32 errcode = 2;
+}
+
+message Room {
+    // req
+
+    // ack
+    optional int32 errcode = 1;
+    optional int32 roomid  = 2;
+}
+
+message JoinRoom {
+    // req
+    optional int32 roomid = 1;
+}

@@ -9,7 +9,16 @@ export enum protocol {
     P_LOGIN_END       = 499,
     // end login
 
-    P_CL_LOGIN_LOBBY_REQ = 500,
-    P_LC_LOGIN_LOBBY_ACK,
+    // lobby
+    P_LOBBY_START  = 500,
+    P_CL_LOBBY_REQ = 500,
+    P_LC_LOBBY_ACK,
+    P_CL_SELECT_GAME_REQ,
+    P_LC_SELECT_GAME_ACK,
+    P_CL_CREATE_ROOM_REQ,
+    P_LC_CREATE_ROOM_ACK,
+    P_CL_JOIN_ROOM_REQ,
+    P_LC_JOIN_ROOM_REQ,
+    // lobby
 }
 

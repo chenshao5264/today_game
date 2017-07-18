@@ -1,18 +1,27 @@
-import { lobby_server, mysql } from './../../config';
-import { SocketService } from './../common/socket_service';
-import { socket_delegate } from './socket_delegate';
 import { logger } from './../../utils/logger';
 
-import db = require('../../tools/db');
-let ret = db.init(mysql());
+import { SocketDelegate } from '../common/socket_delegate';
+import { SocketService } from './../common/socket_service';
+
+import dbMysql = require('../../tools/dbMysql');
+import dbRedis = require('../../tools/dbRedis');
+
+import { MsgHandler } from '../lobby/msg_handler';
+import { lobby_server, mysql } from './../../config';
+
+let ret = dbMysql.init(mysql());
 if (ret) {
-    logger.info('数据库初始化成功');
+    logger.trace('数据库初始化成功');
 } else {
-    logger.info('数据库初始化失败');
+    logger.error('数据库初始化失败');
 }
 
+// 启动redis
+let client = dbRedis.run();
+client.flushall();
 
-let config = lobby_server();
-let socketService = new SocketService(config, socket_delegate);
+let loginConfig = lobby_server();
+let socket_delegate = new SocketDelegate(MsgHandler);
+let socketService = new SocketService(loginConfig, socket_delegate);
 socketService.start();
-logger.info('lobby 服务器启动: ' + config.port);
+logger.info('login 服务器启动: ' + loginConfig.port);

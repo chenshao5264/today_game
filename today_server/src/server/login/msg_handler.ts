@@ -3,9 +3,12 @@ import { logger } from '../../utils/logger';
 import { protobufjs } from '../common/socket_protobufjs';
 import { address2ip } from './../../utils/utility';
 import { md5 } from "../../utils/crypto";
+import { DataMgr } from '../entities/dataMgr';
+import { UserSate } from '../common/define_body';
 
 import BodyType = require('../common/define_body');
-import db = require('../../tools/db');
+import dbMysql = require('../../tools/dbMysql');
+import dbRedis = require('../../tools/dbRedis');
 
 function sendMsgAck(socket: SocketIO.Socket, packet) {
     if (socket.connected) {
@@ -27,99 +30,83 @@ function packRegisterMsg(msgid: number, body: BodyType.ReigsterBody) {
 export let MsgHandler = {};
 MsgHandler[protocol.P_CL_REGISTER_REQ] = function(socket: SocketIO.Socket, msg: BodyType.MsgPacket) {
     logger.trace("处理注册请求");
-    let body: BodyType.ReigsterBody = msg.register;
 
-    async function async_is_account_exsit(account: string): Promise<boolean> {
-         return new Promise<boolean>((resolve, reject) => {
-            db.is_account_exsit(account, function(exist) {
-                resolve(exist);
-            }); 
-        });
-    }
-
-    async function async_create_account(account: string, password: string): Promise<boolean> {
-         return new Promise<boolean>((resolve, reject) => {
-            db.create_account(account, password, function(suc) {
-                resolve(suc);
-            }) 
-        });
-    }
-
-    async function async_create_user(parms: BodyType.UserBody): Promise<boolean> {
-         return new Promise<boolean>((resolve, reject) => {
-            db.create_user(parms, function(suc) {
-                resolve(suc);
-            }) 
-        });
-    }
-
-    let ret = -1;
-    async function async_register(account: string, password: string) {
-        let exist = await async_is_account_exsit(account);
-        console.log("exist = " + exist);
+    async function async_register(account: string, password: string, nickname: string) {
+        let ret = -1;
+        let exist = await dbMysql.async_is_account_exsit(account);
         if (exist) {
             ret = 1;
         } else {
-            let suc = await async_create_account(account, password);
+            let suc = await dbMysql.async_create_account(account, password);
             if (suc) {
                 ret = 0;
-                let succ = await async_create_user({account: account, nickname: '辰少01', gems: 100})
+                let succ = await dbMysql.async_create_user({account: account, nickname: nickname, gems: 100})
                 if (succ) {
                     logger.trace(account + '创建成功');
+                } else {
+
                 }
             } else {
                 ret = 2;
             }
         }
 
-        let packet: BodyType.MsgPacket = {msgid: protocol.P_LC_REGISTER_ACK};
-        let body: BodyType.ReigsterBody = {};
-        body.errcode    = ret;
-        packet.register = body;
+        let packet:      BodyType.MsgPacket    = {msgid: protocol.P_LC_REGISTER_ACK};
+        let body2Client: BodyType.ReigsterBody = {};
+        body2Client.errcode = ret;
+        packet.register     = body2Client;
 
         sendMsgAck(socket, packet);  
-    }
+    }   
 
-    async_register(body.account, body.password);
-
-    // todo
-
-    // let packet: BodyType.MsgPacket = {msgid: protocol.P_LC_REGISTER_ACK};
-    // packet.register = {};
-
-    // db.is_account_exsit(body.account, function(exist) {
-    //     if (exist) {
-    //         packet.register = {errcode: 1};
-    //         sendMsgAck(socket, packet);  
-    //     } else {
-    //         db.create_account(body.account, body.password, function(suc) {
-    //             let ret
-    //             if (suc) {
-    //                 ret = 0;
-    //             } else {
-    //                 ret = 2;
-    //             }
-
-    //             packet.register = {errcode: ret};
-    //             sendMsgAck(socket, packet);  
-    //         })
-    //     }
-    // });
+    let body: BodyType.ReigsterBody = msg.register;
+    async_register(body.account, body.password, body.nickname);
 }
 
 MsgHandler[protocol.P_CL_LOGIN_REQ] = function(socket: SocketIO.Socket, msg: BodyType.MsgPacket) {
-    logger.trace("处理登路请求");
-    let body: BodyType.LoginBody = msg.login;
+    logger.trace("处理登录请求");
+    
+    async function login(account: string, password: string) {
+        let body: BodyType.LoginBody = {};
 
-    db.get_account_info(body.account, function(info: BodyType.AccountBody) {
-        if (info.password == body.password) {
-            logger.trace('验证成功')
+        let info: BodyType.AccountBody = await dbMysql.async_get_account_info(account);
+        console.dir(info);
+        if (info.password == password) {
+            
+            let userinfo: BodyType.UserBody = await dbMysql.async_get_user_info(account);
 
-            db.get_user_info(body.account, function(userinfo: BodyType.UserBody) {
-                let sign = md5(userinfo.account + body.password);
-            })
+            console.dir(userinfo)
+
+            let data = await dbRedis.async_hmget('userid:' + userinfo.userid);
+            console.log(data);
+            if (data == null || data.state == UserSate.STATE_NULL) {
+                logger.trace('验证成功');
+                let sign = md5(account + password + userinfo.userid);
+                let keySign = "sign:" + userinfo.userid;
+                dbRedis.set(keySign, sign);
+                
+                body.errcode = 0;
+                body.sign    = sign;
+                body.ip      = '127.0.0.1';
+                body.port    = 9200;
+                body.user    = userinfo;
+            } else {
+                logger.trace('验证失败, 已经登录');
+                body.errcode = 2;
+            }
+
         } else {
-            logger.trace('验证失败')
+            logger.trace('验证失败');
+            body.errcode = 1;
         }
-    })
+
+        //console.dir(body);
+
+        let packet: BodyType.MsgPacket = {msgid: protocol.P_LC_LOGIN_ACK};
+        packet.login = body;
+        sendMsgAck(socket, packet);
+    }
+
+    let body: BodyType.LoginBody = msg.login;
+    login(body.account, body.password);
 }

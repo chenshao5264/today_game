@@ -3,10 +3,30 @@ syntax = "proto3";
 
 message Register {
 
-    // 请求
+    // req
     optional string account  = 1;
     optional string password = 2;
     optional string nickname = 3;
-    // 回复
+    // ack
     optional int32 errcode   = 4;
+}
+
+message User {
+    optional int32 userid    = 1;
+    optional string account  = 2;
+    optional string nickname = 3;
+    optional int32 gems      = 4;
+}
+
+message Login {
+    // req
+    optional string account  = 1;
+    optional string password = 2;
+
+    // ack
+    optional int32 errcode   = 3;
+    optional string sign     = 4;
+    optional string ip       = 5;
+    optional int32 port      = 6;
+    optional User user       = 7;
 }

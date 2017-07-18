@@ -1,44 +1,63 @@
-import { UserSate } from '../common/define_body';
+import { UserSate } from '../common/enums';
+import BodyType = require('../common/define_body');
 
+// 只在进入大厅时实例化
 export class User {
     
-    constructor(userid: number) {
-        this._userid = userid;
+    private _id:      number   = 0;
+    private _state:   UserSate = UserSate.STATE_NULL;
+    private _isOwner: boolean  = false;
+	private _roomid:  number   = 0;
+	private _socket:  BodyType.SocketIO_Socket = null;
+	
+	public static create(userid: number, socket: BodyType.SocketIO_Socket): User {
+		let user = new User();
+		user._id    = userid;
+		user._socket = socket;
+		return user;
+	}
+
+    private constructor() {	
+		this._state = UserSate.STATE_LOBBY;
     }
 
-    private _userid:    number   = 0;
-    private _userState: UserSate = UserSate.STATE_NULL;
-    private _isOwner:   boolean  = false;
-    private _roomid:    number   = 0;
+    public get roomid():    number    {
+		return this._roomid;
+	}
 
-    public setRoomId(roomid) {
-        this._roomid = roomid;
-    }
-    public getRoomId() {
-        return this._roomid;        
-    }
+	public set roomid(value:    number   ) {
+		this._roomid = value;
+	}
 
-    public setIsOwner(isOwner) {
-        this._isOwner = isOwner;
-    }
-    public getIsOwner () {
-        return this._isOwner;
-    }
+	public get id():    number    {
+		return this._id;
+	}
 
-    public getState() {
-        return this._userState;
-    }
+	public set id(value:    number   ) {
+		this._id = value;
+	}
 
-    public setState(state: UserSate) {
-        this._userState = state;
-    }
+	public get state(): UserSate  {
+		return this._state;
+	}
 
-    public enterRoom() {
-        this._userState = UserSate.STATE_ROOM;
-    }
+	public set state(value: UserSate ) {
+		this._state = value;
+	}
 
-    public leaveRoom() {
-        this._userState = UserSate.STATE_LOBBY;
-    }
+	public get isOwner():   boolean   {
+		return this._isOwner;
+	}
 
+	public set isOwner(value:   boolean  ) {
+		this._isOwner = value;
+	}
+
+    // public enterRoom() {
+    //     this._state = UserSate.STATE_ROOM;
+    // }
+
+    // public leaveRoom() {
+    //     this._state = UserSate.STATE_LOBBY;
+	// }
 }

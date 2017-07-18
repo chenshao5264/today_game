@@ -17,8 +17,8 @@ export enum protocol {
     P_LC_SELECT_GAME_ACK,
     P_CL_CREATE_ROOM_REQ,
     P_LC_CREATE_ROOM_ACK,
-    P_CL_JOIN_ROOM_REQ,
-    P_LC_JOIN_ROOM_REQ,
+    P_CL_ENTER_ROOM_REQ,
+    P_LC_ENTER_ROOM_ACK,
     // lobby
 }
 

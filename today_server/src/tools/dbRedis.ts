@@ -17,11 +17,11 @@ export let run = function() {
     client = redis.createClient();
 
     client.on('end', function(err) {
-        logger.trace('redis end');
+        logger.trace('redis end' + err);
     });
 
     client.on('error', function(err) {
-        logger.trace('redis error');
+        logger.trace('redis error' + err);
     });
 
     return client;

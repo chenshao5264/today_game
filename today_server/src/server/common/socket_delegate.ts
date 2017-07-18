@@ -2,7 +2,7 @@ import { protocol } from './../common/socket_protocol';
 import { logger } from './../../utils/logger';
 import { address2ip } from './../../utils/utility';
 import { protobufjs } from './../common/socket_protobufjs';
-import { UserSate } from '../common/define_body';
+import { UserSate } from '../common/enums';
 
 import BodyType = require('../common/define_body');
 import dbRedis = require('../../tools/dbRedis');

@@ -1,3 +1,10 @@
+let args = process.argv.splice(2);
+let account = args[0];
+let roomid = args[1];
+let action = args[2];
+
+console.log(account)
+
 import io = require('socket.io-client');
 
 import { protobufjs } from '../server/common/socket_protobufjs';
@@ -15,9 +22,9 @@ var opts = {
  let socket = io.connect('ws://127.0.0.1:9100', opts);
  
 function register() {
-    let packet: BodyType.MsgPacket = { msgid: protocol.P_CL_REGISTER_REQ };
+    let packet: BodyType.BaseBody = { msgid: protocol.P_CL_REGISTER_REQ };
     let body: BodyType.ReigsterBody = {};
-    body.account = 'chenshao02';
+    body.account = account;
     body.nickname = '辰少01';
     body.password = 'chb123';
     packet.register = body;
@@ -27,9 +34,9 @@ function register() {
 }
 
 function login() {
-    let packet: BodyType.MsgPacket = {msgid: protocol.P_CL_LOGIN_REQ};
+    let packet: BodyType.BaseBody = {msgid: protocol.P_CL_LOGIN_REQ};
     let body: BodyType.LoginBody = {}
-    body.account = 'chenshao02';
+    body.account = account;
     body.password = 'chb123';
     packet.login = body;
 
@@ -63,16 +70,18 @@ MSG[protocol.P_LC_REGISTER_ACK] = function(data) {
     } else {
         console.log('errcode = ' + body.errcode);
     }
+
+    
 }
 
-MSG[protocol.P_LC_LOGIN_ACK] = function(data: BodyType.MsgPacket) {
+MSG[protocol.P_LC_LOGIN_ACK] = function(data: BodyType.BaseBody) {
     let body: BodyType.LoginBody = data.login;
     console.log(data);
     if (body.errcode == 0) {
         console.log('login登录成功');
 
         
-        lobbyApp.start(body.user.userid, body.sign);
+        lobbyApp.start(body.user.userid, body.sign, roomid, action);
 
     } else {
         console.log('errcode = ' + body.errcode);

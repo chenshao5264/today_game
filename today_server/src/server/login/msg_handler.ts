@@ -4,7 +4,7 @@ import { protobufjs } from '../common/socket_protobufjs';
 import { address2ip } from './../../utils/utility';
 import { md5 } from "../../utils/crypto";
 import { DataMgr } from '../entities/dataMgr';
-import { UserSate } from '../common/define_body';
+import { UserSate } from '../common/enums';
 
 import BodyType = require('../common/define_body');
 import dbMysql = require('../../tools/dbMysql');
@@ -21,14 +21,14 @@ function sendMsgAck(socket: SocketIO.Socket, packet) {
 
 function packRegisterMsg(msgid: number, body: BodyType.ReigsterBody) {
 
-    let packet: BodyType.MsgPacket = {msgid: msgid};
+    let packet: BodyType.BaseBody = {msgid: msgid};
     packet.register = body;
 
     return packet;
 }
 
 export let MsgHandler = {};
-MsgHandler[protocol.P_CL_REGISTER_REQ] = function(socket: SocketIO.Socket, msg: BodyType.MsgPacket) {
+MsgHandler[protocol.P_CL_REGISTER_REQ] = function(socket: SocketIO.Socket, msg: BodyType.BaseBody) {
     logger.trace("处理注册请求");
 
     async function async_register(account: string, password: string, nickname: string) {
@@ -51,7 +51,7 @@ MsgHandler[protocol.P_CL_REGISTER_REQ] = function(socket: SocketIO.Socket, msg: 
             }
         }
 
-        let packet:      BodyType.MsgPacket    = {msgid: protocol.P_LC_REGISTER_ACK};
+        let packet:      BodyType.BaseBody    = {msgid: protocol.P_LC_REGISTER_ACK};
         let body2Client: BodyType.ReigsterBody = {};
         body2Client.errcode = ret;
         packet.register     = body2Client;
@@ -63,15 +63,14 @@ MsgHandler[protocol.P_CL_REGISTER_REQ] = function(socket: SocketIO.Socket, msg: 
     async_register(body.account, body.password, body.nickname);
 }
 
-MsgHandler[protocol.P_CL_LOGIN_REQ] = function(socket: SocketIO.Socket, msg: BodyType.MsgPacket) {
+MsgHandler[protocol.P_CL_LOGIN_REQ] = function(socket: SocketIO.Socket, msg: BodyType.BaseBody) {
     logger.trace("处理登录请求");
     
     async function login(account: string, password: string) {
         let body: BodyType.LoginBody = {};
 
         let info: BodyType.AccountBody = await dbMysql.async_get_account_info(account);
-        console.dir(info);
-        if (info.password == password) {
+        if (info && info.password == password) {
             
             let userinfo: BodyType.UserBody = await dbMysql.async_get_user_info(account);
 
@@ -102,7 +101,7 @@ MsgHandler[protocol.P_CL_LOGIN_REQ] = function(socket: SocketIO.Socket, msg: Bod
 
         //console.dir(body);
 
-        let packet: BodyType.MsgPacket = {msgid: protocol.P_LC_LOGIN_ACK};
+        let packet: BodyType.BaseBody = {msgid: protocol.P_LC_LOGIN_ACK};
         packet.login = body;
         sendMsgAck(socket, packet);
     }

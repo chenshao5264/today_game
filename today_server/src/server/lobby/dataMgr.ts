@@ -3,7 +3,7 @@ import { Room } from './room';
 import { User } from './user';
 
 import { UserSate } from '../common/enums';
-//import { sendMsgAck } from '../lobby/msg_handler';
+
 
 import BodyType = require('../common/define_body');
 export class DataMgr {
@@ -23,13 +23,13 @@ export class DataMgr {
     private _rooms: {[key: number]: Room} = {};
 
     public appendUser(userid: number, socket: BodyType.SocketIO_Socket) {
-        let user = this._users[userid];
-        if (user) {
+        if (this._users[userid]) {
             delete this._users[userid];
         }
-        this._users[userid] = User.create(userid, socket);
+        let user = User.create(userid, socket);
+        this._users[userid] = user;
         
-        logger.info("appendUser = " + JSON.stringify(this._users));
+        logger.info("appendUser = " + userid);
     }
 
     public getUser(userid: number) {
@@ -38,18 +38,14 @@ export class DataMgr {
 
     public delUser(userid: number) {
 
-        let user
-
-        if (this._users[userid]) {
-            delete this._users[userid];
-        }
+        
     }
 
 
     // 生成房间号
     private generate_roomid(): number {
 
-        logger.info("generate_roomid = " + JSON.stringify(this._rooms));
+       // logger.info("generate_roomid = " + JSON.stringify(this._rooms));
         while (true) {
             let roomid = Math.floor(Math.random() * 1000000);
             if (!this._rooms[roomid]) {
@@ -72,7 +68,7 @@ export class DataMgr {
             room.enter(user, true);
         }     
 
-        logger.info('房间创建成功: ' + roomid);
+        logger.info('房间创建成功并进入房间: ' + roomid);
         return roomid;
     }
 
@@ -94,6 +90,8 @@ export class DataMgr {
         let errcode = 0;
         if (user && room) {
             if (user.state == UserSate.STATE_LOBBY) {
+                //if (room.s)
+                logger.info(userid + " 进入房间");
                 room.enter(user, false);
             } else {
                 logger.info('用户状态不对: ' + user.state);
@@ -116,7 +114,7 @@ export class DataMgr {
     public leaveRoom(userid: number) {
         logger.info(userid + ' 离开房间')
         let user = this._users[userid];
-        console.dir(user);
+        
         if (!user) {
             return;
         }
@@ -147,7 +145,6 @@ export class DataMgr {
         delete this._rooms[roomid];
 
         logger.info('房间解散: ' + roomid);
-        console.dir(this._rooms);
     }
 
     // 查找房间

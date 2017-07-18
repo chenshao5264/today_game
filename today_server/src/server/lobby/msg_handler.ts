@@ -5,19 +5,17 @@ import { address2ip } from './../../utils/utility';
 import { md5 } from '../../utils/crypto';
 import { DataMgr } from './dataMgr';
 import { UserSate } from '../common/enums';
+import { User } from './user';
 
 import BodyType = require('../common/define_body');
 import dbMysql = require('../../tools/dbMysql');
 import dbRedis = require('../../tools/dbRedis');
 
-let sendMsgNotify = function () {
 
-}
-
-let sendMsgAck = function(socket: BodyType.SocketIO_Socket, packet: any) {
+let sendMsgAck = function(socket: BodyType.SocketIO_Socket, packet: BodyType.BaseBody) {
     if (socket.connected) { 
 
-        logger.info(packet);
+        logger.info("packet = " + JSON.stringify(packet));
 
         packet = protobufjs.encode(packet);
         socket.emit('message', packet);

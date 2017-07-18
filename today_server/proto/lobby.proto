@@ -24,6 +24,9 @@ message Room {
     // ack
     optional int32 errcode = 1;
     optional int32 roomid  = 2;
+    
+    // leave notify
+    optional int32 userid  = 3;
 }
 
 message JoinRoom {

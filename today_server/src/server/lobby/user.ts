@@ -10,6 +10,10 @@ export class User {
 	private _roomid:  number   = 0;
 	private _socket:  BodyType.SocketIO_Socket = null;
 	
+	private constructor() {	
+		this._state = UserSate.STATE_LOBBY;
+	}
+	
 	public static create(userid: number, socket: BodyType.SocketIO_Socket): User {
 		let user = new User();
 		user._id    = userid;
@@ -17,9 +21,11 @@ export class User {
 		return user;
 	}
 
-    private constructor() {	
-		this._state = UserSate.STATE_LOBBY;
-    }
+	public  get socket():  BodyType.SocketIO_Socket  {
+		return this._socket;
+	}
+	
+
 
     public get roomid():    number    {
 		return this._roomid;

@@ -46,8 +46,8 @@ export interface LobbyBody {
 
 export interface RoomBody {
     // req create
-
     // req enter
+    // req leave
 
 
     // ack
@@ -55,6 +55,9 @@ export interface RoomBody {
 
     // enter req & ack
     roomid?: number;
+
+    // leave ack
+    userid?: number;
 }
 
 export interface AccountBody {

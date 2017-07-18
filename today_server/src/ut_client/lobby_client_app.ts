@@ -113,3 +113,11 @@ MSG[protocol.P_LC_ENTER_ROOM_ACK] = function(data: BodyType.BaseBody) {
         console.log('enter room errcode = ' + body.errcode);
     }
 }
+
+
+MSG[protocol.P_LC_LEAVE_ROOM_NOTIFY] = function(data: BodyType.BaseBody) {
+    console.log(data);
+    let body = data.room;
+
+    console.log(body.userid +  ' 有人离开房间')
+}

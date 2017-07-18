@@ -67,6 +67,8 @@ MSG[protocol.P_LC_REGISTER_ACK] = function(data) {
     console.log(body);
     if (body.errcode == 0) {
         console.log('注册成功');
+
+        login();
     } else {
         console.log('errcode = ' + body.errcode);
     }
@@ -85,6 +87,8 @@ MSG[protocol.P_LC_LOGIN_ACK] = function(data: BodyType.BaseBody) {
 
     } else {
         console.log('errcode = ' + body.errcode);
+
+        register();
     }
 }
 

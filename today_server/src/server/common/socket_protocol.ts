@@ -19,6 +19,9 @@ export enum protocol {
     P_LC_CREATE_ROOM_ACK,
     P_CL_ENTER_ROOM_REQ,
     P_LC_ENTER_ROOM_ACK,
+
+    P_CL_LEAVE_ROOM_REQ,
+    P_LC_LEAVE_ROOM_NOTIFY,
     // lobby
 }
 

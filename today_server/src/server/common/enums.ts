@@ -11,6 +11,7 @@ export enum UserSate {
 export enum RoomrSate {
     STATE_NULL = 0,
     STATE_EMPTY,
+    STATE_WAIT,
     STATE_READY,
     STATE_GAMING,
 }

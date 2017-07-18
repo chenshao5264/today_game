@@ -2,7 +2,7 @@ import { logger } from './../../utils/logger';
 import { Room } from './room';
 import { User } from './user';
 
-import { UserSate } from '../common/enums';
+import { UserSate, RoomrSate } from '../common/enums';
 
 
 import BodyType = require('../common/define_body');
@@ -90,9 +90,14 @@ export class DataMgr {
         let errcode = 0;
         if (user && room) {
             if (user.state == UserSate.STATE_LOBBY) {
-                //if (room.s)
-                logger.info(userid + " 进入房间");
-                room.enter(user, false);
+                if (room.state == RoomrSate.STATE_WAIT) {
+                    logger.info(userid + " 进入房间");
+                    room.enter(user, false);
+                } else {
+                     logger.info('房间状态不对 ' + room.state);
+                     errcode = 4;
+                }
+                
             } else {
                 logger.info('用户状态不对: ' + user.state);
                 errcode = 1;

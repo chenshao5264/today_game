@@ -7,8 +7,7 @@ import dbMysql = require('../../tools/dbMysql');
 import dbRedis = require('../../tools/dbRedis');
 
 import { MsgHandler } from '../lobby/msg_handler';
-import { mysql } from './../../config';
-import { gpConcig } from './config';
+import { lobby_server, mysql } from './../../config';
 
 let ret = dbMysql.init(mysql());
 if (ret) {
@@ -19,8 +18,10 @@ if (ret) {
 
 // 启动redis
 let client = dbRedis.run();
+client.flushall();
 
+let loginConfig = lobby_server();
 let socket_delegate = new SocketDelegate(MsgHandler);
-let socketService = new SocketService(gpConcig, socket_delegate);
+let socketService = new SocketService(loginConfig, socket_delegate);
 socketService.start();
-logger.info('game 服务器启动: ' + gpConcig.port);
+logger.info('login 服务器启动: ' + loginConfig.port);

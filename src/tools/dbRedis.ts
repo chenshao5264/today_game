@@ -35,7 +35,8 @@ export let setKeyExpire = function(key: string, value: number) {
     client.expire(key, value);
 }
 
-export let set = function(key: string, value: string) {
+export let set = function(key: string, value: string, callback?: any) {
+    callback =  callback == null ? nop : callback;
 
     if (key == null || value == null) {
         return;

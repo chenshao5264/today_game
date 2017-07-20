@@ -83,7 +83,7 @@ MSG[protocol.P_LC_LOGIN_ACK] = function(data: BodyType.BaseBody) {
         console.log('login登录成功');
 
         
-        lobbyApp.start(account, body.sign, roomid, action);
+        lobbyApp.start(body.user.userid, body.sign, roomid, action);
 
     } else {
         console.log('errcode = ' + body.errcode);

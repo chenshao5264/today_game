@@ -2,7 +2,7 @@ import io = require('socket.io-client');
 
 import { protobufjs } from '../server/common/socket_protobufjs';
 import { protocol } from '../server/common/socket_protocol';
-import BodyType = require('../server/defines/bodys')
+import BodyType = require('../server/common/define_body')
 
 var opts = {
     'reconnection': false,
@@ -12,14 +12,12 @@ var opts = {
 
 let socket;
 
-let _account;
+let _userid;
 let _sign;
 let _roomid;
 let _action;
 
-export let start = function(account, sign, roomid, action) {
-    _account = account;
-    _sign = sign;
+export let start = function(userid, sign, roomid, action) {
     _roomid = roomid 
     _action = action
 
@@ -40,8 +38,8 @@ export let start = function(account, sign, roomid, action) {
         MSG[msg.msgid](msg);
     })
 
-
-    
+    _userid = userid;
+    _sign = sign;
 }
 
  
@@ -49,12 +47,11 @@ function login() {
     let packet: BodyType.BaseBody = {msgid: protocol.P_CL_LOBBY_REQ};
     let body: BodyType.LobbyBody = {}
 
-    body.account = _account;
+    body.userid = _userid;
     body.sign   = _sign;
 
     packet.lobby = body;
 
-    console.log(packet)
 
     packet = protobufjs.encode(packet);
     socket.emit('message', packet)

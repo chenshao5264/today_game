@@ -25,24 +25,26 @@ export interface ReigsterBody {
 
 export interface LoginBody {
     // req
-    account?:  string;
-    password?: string;
+    account?:   string;
+    password?:  string;
+    logintime?: string;
+
 
     // ack
     errcode?: number;
     sign?:    string;
     ip?:      string;
     port?:    number;
-    user?:    UserBody;
 }
 
 export interface LobbyBody {
     // req
-    userid?:   number;
+    account?:   string;
     sign?:    string;
 
     // ack
     errcode?: number;
+    userinfo?: UserBody;
 }
 
 export interface RoomBody {
@@ -77,6 +79,7 @@ export interface UserBody {
     userid?:   number;
     account?:  string;
     nickname?: string;
+    sex?:      number;
     gems?:     number;
 }
 

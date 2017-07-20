@@ -3,10 +3,9 @@ import { logger } from '../../utils/logger';
 import { protobufjs } from '../common/socket_protobufjs';
 import { address2ip } from './../../utils/utility';
 import { md5 } from "../../utils/crypto";
-import { DataMgr } from '../entities/dataMgr';
-import { UserSate } from '../common/enums';
+import { lobbyConfig } from '../config'; 
 
-import BodyType = require('../common/define_body');
+import BodyType = require('../defines/bodys');
 import dbMysql = require('../../tools/dbMysql');
 import dbRedis = require('../../tools/dbRedis');
 
@@ -31,15 +30,22 @@ export let MsgHandler = {};
 MsgHandler[protocol.P_CL_REGISTER_REQ] = function(socket: SocketIO.Socket, msg: BodyType.BaseBody) {
     logger.trace("处理注册请求");
 
-    async function async_register(account: string, password: string, nickname: string) {
-        let ret = -1;
+    let clientData: BodyType.ReigsterBody = msg.register;
+    let serverData: BodyType.ReigsterBody = {};
+
+    let account = clientData.account;
+    let nickname = clientData.nickname;
+    let password = clientData.password;
+
+    async function async_register() {
+        let ret = 0;
         let exist = await dbMysql.async_is_account_exsit(account);
         if (exist) {
-            ret = 1;
+            serverData.errcode = 1;
         } else {
             let suc = await dbMysql.async_create_account(account, password);
             if (suc) {
-                ret = 0;
+                serverData.errcode = 0;
                 let succ = await dbMysql.async_create_user({account: account, nickname: nickname, gems: 100})
                 if (succ) {
                     logger.trace(account + '创建成功');
@@ -47,65 +53,51 @@ MsgHandler[protocol.P_CL_REGISTER_REQ] = function(socket: SocketIO.Socket, msg: 
 
                 }
             } else {
-                ret = 2;
+                serverData.errcode = 2;
             }
         }
-
-        let packet:      BodyType.BaseBody    = {msgid: protocol.P_LC_REGISTER_ACK};
-        let body2Client: BodyType.ReigsterBody = {};
-        body2Client.errcode = ret;
-        packet.register     = body2Client;
-
-        sendMsgAck(socket, packet);  
     }   
 
-    let body: BodyType.ReigsterBody = msg.register;
-    async_register(body.account, body.password, body.nickname);
+    async_register().then(function() {
+        let packet: BodyType.BaseBody = {msgid: protocol.P_LC_REGISTER_ACK};
+        packet.register = serverData;
+        sendMsgAck(socket, packet);  
+    });
 }
 
 MsgHandler[protocol.P_CL_LOGIN_REQ] = function(socket: SocketIO.Socket, msg: BodyType.BaseBody) {
     logger.trace("处理登录请求");
     
-    async function login(account: string, password: string) {
-        let body: BodyType.LoginBody = {};
+    let clientData: BodyType.LoginBody = msg.login;
+    let serverData: BodyType.LoginBody = {};
 
-        let info: BodyType.AccountBody = await dbMysql.async_get_account_info(account);
-        if (info && info.password == password) {
+    async function async_login() {
+        console.log('111111111')
+        let info: BodyType.AccountBody = await dbMysql.async_get_account_info(clientData.account);
+        console.log('222222')
+        if (info && info.password == clientData.password) {
+            logger.trace('验证成功');
+            //let userinfo: BodyType.UserBody = await dbMysql.async_get_user_info(clientData.account);
+            let sign = md5(clientData.account + clientData.password + Date.now());
+            let keySign = "sign:" + clientData.account;
+            console.log(keySign)
+            console.log(sign)
+            dbRedis.set(keySign, sign);
+            //dbRedis.setKeyExpire(keySign, 5);
             
-            let userinfo: BodyType.UserBody = await dbMysql.async_get_user_info(account);
-
-            console.dir(userinfo)
-
-            let data = await dbRedis.async_hmget('userid:' + userinfo.userid);
-            console.log(data);
-            if (data == null || data.state == UserSate.STATE_NULL) {
-                logger.trace('验证成功');
-                let sign = md5(account + password + userinfo.userid);
-                let keySign = "sign:" + userinfo.userid;
-                dbRedis.set(keySign, sign);
-                
-                body.errcode = 0;
-                body.sign    = sign;
-                body.ip      = '127.0.0.1';
-                body.port    = 9200;
-                body.user    = userinfo;
-            } else {
-                logger.trace('验证失败, 已经登录');
-                body.errcode = 2;
-            }
-
+            serverData.errcode = 0;
+            serverData.sign    = sign;
+            serverData.ip      = lobbyConfig.ip;
+            serverData.port    = lobbyConfig.port;
         } else {
             logger.trace('验证失败');
-            body.errcode = 1;
+            serverData.errcode = 1;
         }
-
-        //console.dir(body);
-
-        let packet: BodyType.BaseBody = {msgid: protocol.P_LC_LOGIN_ACK};
-        packet.login = body;
-        sendMsgAck(socket, packet);
     }
 
-    let body: BodyType.LoginBody = msg.login;
-    login(body.account, body.password);
+    async_login().then(function() {
+        let packet: BodyType.BaseBody = {msgid: protocol.P_LC_LOGIN_ACK};
+        packet.login = serverData;
+        sendMsgAck(socket, packet);
+    })
 }

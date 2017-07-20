@@ -1,6 +1,6 @@
 import { logger } from './../../utils/logger';
 import { User } from './user';
-import { UserSate, RoomrSate } from '../common/enums';
+import { UserSate, RoomrSate } from '../defines/enums';
 import { MsgSender } from '../lobby/msgSender';
 import BodyType = require('../common/define_body');
 import { roomConfig } from '../../config';

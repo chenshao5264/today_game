@@ -3,7 +3,7 @@ export interface game_config {
     port: number,
 }
 
-export let gpConcig: game_config = {
+export let gameConfig: game_config = {
     ip: '127.0.0.1',
     port: 9300,
 }

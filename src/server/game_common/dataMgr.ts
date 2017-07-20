@@ -2,10 +2,10 @@ import { logger } from './../../utils/logger';
 import { Room } from './room';
 import { User } from './user';
 
-import { UserSate, RoomrSate } from '../common/enums';
+import { UserSate, RoomrSate } from '../defines/enums';
 
 
-import BodyType = require('../common/define_body');
+import BodyType = require('../defines/bodys');
 export class DataMgr {
     private static readonly _dataMgr: DataMgr = new DataMgr();
 
@@ -38,7 +38,6 @@ export class DataMgr {
 
     public delUser(userid: number) {
 
-        
     }
 
 
@@ -97,6 +96,7 @@ export class DataMgr {
                      logger.info('房间状态不对 ' + room.state);
                      errcode = 4;
                 }
+                
             } else {
                 logger.info('用户状态不对: ' + user.state);
                 errcode = 1;
@@ -110,6 +110,7 @@ export class DataMgr {
                 errcode = 3;
             }
         }
+
         return errcode;
     }
 

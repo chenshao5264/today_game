@@ -15,7 +15,7 @@ export class SocketDelegate {
     }
 
     public onDisconnect(socket: BodyType.SocketIO_Socket, data: any) {
-        logger.trace(address2ip(socket.handshake.address) + ' ' + socket.userid + ' 断开服务器: ' + data);
+        logger.trace(address2ip(socket.handshake.address) + ' ' + socket.userid + ' 断开服务器');
         dbRedis.hmset('userid:' + socket.userid, {'state': UserSate.STATE_NULL});
 
         if (this._msgHandler['ON_DISCONNECT']) {
@@ -24,7 +24,7 @@ export class SocketDelegate {
     }
 
     public onError(socket: BodyType.SocketIO_Socket, data: any) {
-        logger.warn(address2ip(socket.handshake.address) + ' ' + socket.userid + ' 发生错误: ' + data);
+        logger.warn(address2ip(socket.handshake.address) + ' ' + socket.userid + ' 发生错误' + data);
         dbRedis.hmset('userid:' + socket.userid, {'state': UserSate.STATE_NULL});
 
         if (this._msgHandler['ON_DISCONNECT']) {

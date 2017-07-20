@@ -28,5 +28,5 @@ message Login {
     optional string sign     = 4;
     optional string ip       = 5;
     optional int32 port      = 6;
-    optional User user       = 7;
+    //optional User user       = 7;
 }

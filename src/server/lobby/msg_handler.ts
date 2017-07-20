@@ -3,12 +3,11 @@ import { logger } from '../../utils/logger';
 import { protobufjs } from '../common/socket_protobufjs';
 import { address2ip } from './../../utils/utility';
 import { md5 } from '../../utils/crypto';
-import { DataHelper } from './data_helper';
-import { UserSate } from '../defines/enums';
-import { User } from '../entities/user';
-import { RoomHelper } from './room_helper';
+import { DataMgr } from './dataMgr';
+import { UserSate } from '../common/enums';
+import { User } from './user';
 
-import BodyType = require('../defines/bodys');
+import BodyType = require('../common/define_body');
 import dbMysql = require('../../tools/dbMysql');
 import dbRedis = require('../../tools/dbRedis');
 
@@ -38,26 +37,36 @@ MsgHandler['ON_DISCONNECT'] = function(userid: number) {
     // }
 }
 
-MsgHandler[protocol.P_CL_LOBBY_REQ] = async function(socket: BodyType.SocketIO_Socket, msg: BodyType.BaseBody) {
+MsgHandler[protocol.P_CL_LOBBY_REQ] = function(socket: BodyType.SocketIO_Socket, msg: BodyType.BaseBody) {
     logger.trace("处理lobby登录请求");
 
-    let clientData: BodyType.LobbyBody = msg.lobby;
-    let serverData: BodyType.LobbyBody = {}
+    let bodyFromClient: BodyType.LobbyBody = msg.lobby;
+    let userid = bodyFromClient.userid
+    async function async_getSign() {
+        let sign = await dbRedis.async_get('sign:' + userid);
 
-    let sign = await dbRedis.async_get('sign:' + clientData.account);
-    if (sign == clientData.sign) {
-        serverData.errcode = 0;
-    } else {
-        serverData.errcode = 1;
+        let body2Client: BodyType.LobbyBody = {}
+        if (sign == bodyFromClient.sign) {
+            body2Client.errcode = 0;
+        } else {
+            body2Client.errcode = 1;
+        }
+
+        let packet: BodyType.BaseBody = {msgid: protocol.P_LC_LOBBY_ACK};
+        packet.lobby = body2Client;
+
+        sendMsgAck(socket, packet);
+
+        return body2Client.errcode == 1 ? true : false;
     }
 
-    
-    //dbRedis.hmset('userid:' + userid, {'state': UserSate.STATE_LOBBY});
-    await DataHelper.getInstance().appendUser(clientData.account, socket);
+    if (!async_getSign()) {
+        return;
+    }
 
-    let packet: BodyType.BaseBody = {msgid: protocol.P_LC_LOBBY_ACK};
-    packet.lobby = serverData;
-    sendMsgAck(socket, packet);
+    socket.userid = userid;
+    dbRedis.hmset('userid:' + userid, {'state': UserSate.STATE_LOBBY});
+    DataMgr.getInstance().appendUser(userid, socket);
 }
 
 MsgHandler[protocol.P_CL_SELECT_GAME_REQ] = function(socket: BodyType.SocketIO_Socket, msg: BodyType.BaseBody) {
@@ -67,47 +76,47 @@ MsgHandler[protocol.P_CL_SELECT_GAME_REQ] = function(socket: BodyType.SocketIO_S
 MsgHandler[protocol.P_CL_CREATE_ROOM_REQ] = function(socket: BodyType.SocketIO_Socket, msg: BodyType.BaseBody) {
     logger.trace("处理create room请求");
 
-    let clientData: BodyType.RoomBody = msg.room;
+    let bodyFromClient: BodyType.RoomBody = msg.room;
     let userid = socket.userid;
 
     let packet: BodyType.BaseBody = {msgid: protocol.P_LC_CREATE_ROOM_ACK}
-    let serverData: BodyType.RoomBody = {};
+    let body2Client: BodyType.RoomBody = {};
 
-    let user = DataHelper.getInstance().getUserById(userid);
+    let user = DataMgr.getInstance().getUser(userid);
 
-    if (user) {
-        let roomid = RoomHelper.getInstance().createRoom(userid);
+    if (user && user.state == UserSate.STATE_LOBBY) {
+        let roomid = DataMgr.getInstance().createRoom(userid);
         if (roomid != 0) {
-            serverData.errcode = 0;
-            serverData.roomid = roomid;
+            body2Client.errcode = 0;
+            body2Client.roomid = roomid;
         } else {
-            serverData.errcode = 1;
+            body2Client.errcode = 1;
         }
     } else {
-        serverData.errcode = 2;
+        body2Client.errcode = 2;
     }
 
-    packet.room = serverData;
+    packet.room = body2Client;
     sendMsgAck(socket, packet);
 }
 
 MsgHandler[protocol.P_CL_ENTER_ROOM_REQ] = function(socket: BodyType.SocketIO_Socket, msg: BodyType.BaseBody) {
     logger.trace("enter room 请求");
 
-    // let bodyFromClient: BodyType.RoomBody = msg.room;
-    // console.log(bodyFromClient);
-    // let roomid = bodyFromClient.roomid;
+    let bodyFromClient: BodyType.RoomBody = msg.room;
+    console.log(bodyFromClient);
+    let roomid = bodyFromClient.roomid;
 
-    // let packet: BodyType.BaseBody = {msgid: protocol.P_LC_ENTER_ROOM_ACK}
-    // let body2Client: BodyType.RoomBody = {};
+    let packet: BodyType.BaseBody = {msgid: protocol.P_LC_ENTER_ROOM_ACK}
+    let body2Client: BodyType.RoomBody = {};
 
-    // let userid  = socket.userid;
-    // let errcode = DataMgr.getInstance().enterRoom(userid, roomid);
-    // body2Client.errcode = errcode;
+    let userid  = socket.userid;
+    let errcode = DataMgr.getInstance().enterRoom(userid, roomid);
+    body2Client.errcode = errcode;
 
-    // packet.room = body2Client;
+    packet.room = body2Client;
 
-    // sendMsgAck(socket, packet);
+    sendMsgAck(socket, packet);
 }
 
 MsgHandler[protocol.P_CL_HAND_UP_REQ] = function(socket: BodyType.SocketIO_Socket, msg: BodyType.BaseBody) {

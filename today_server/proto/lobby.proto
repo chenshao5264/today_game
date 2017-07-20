@@ -3,7 +3,7 @@ syntax = "proto3";
 
 message Lobby {
     // req
-    optional int32 userid = 1;
+    optional string account = 1;
     optional string sign  = 2;
 
     // ack

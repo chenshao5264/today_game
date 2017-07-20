@@ -5,7 +5,7 @@ import { sql_config } from '../config';
 
 require('../utils/utility');
 
-import BodyType = require('../server/defines/bodys');
+import BodyType = require('../server/common/define_body');
 
 let pool: mysql.IPool = null;
 
@@ -204,7 +204,7 @@ export let get_user_info = function(account: string, callback) {
         return;
     }
 
-    var sql = 'SELECT * FROM t_users WHERE account = "' + account + '"';
+    var sql = 'SELECT userid, account, name, gems FROM t_users WHERE account = "' + account + '"';
     query(sql, function(err, rows, fields) {
         if (err) {
             logger.error(account + " 查询id失败");

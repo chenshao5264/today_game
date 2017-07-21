@@ -3,52 +3,46 @@ import BodyType = require('../defines/bodys');
 
 export class User {
     
-    private _id:      number   = 0;
-    private _state:   UserSate = UserSate.STATE_NULL;
-    private _isOwner: boolean  = false;
-	private _roomid:  number   = 0;
-	//private _socket:  BodyType.SocketIO_Socket = null;
+    private _state: UserSate;
+    private _isOwner: boolean;
+	private _roomid: number;
 
-	// 基本信息
-	private _info: BodyType.UserBody = {
-		nickname: '',
-		account: '',
-		sex: 1,
-		gems: 0,
-	}
-	
+	private _id: number;
+	private _account: string;
+	private _nickname: string;
+	private _sex: number;
+	private _gems: number;
+
 	private constructor() {	
 
 	}
 	
 	public static create(userinfo: BodyType.UserBody): User {
 		let user = new User();
-		user._info.nickname = userinfo.nickname;
-		user._info.account  = userinfo.account;
-		user._info.sex      = userinfo.sex;
-		user._info.gems     = userinfo.gems;
+		
+		user._id       = userinfo.userid;
+		user._account  = userinfo.account;
+		user._nickname = userinfo.nickname;
+		user._sex      = userinfo.sex;
+		user._gems     = userinfo.gems;
 
 		return user;
 	}
 
-	// public  get socket():  BodyType.SocketIO_Socket  {
-	// 	return this._socket;
-	// }
+	public get id(): number {
+		return this._id;
+	}
 
+	public set id(value: number) {
+		this._id = value;
+	}
+	
     public get roomid():    number    {
 		return this._roomid;
 	}
 
 	public set roomid(value:    number   ) {
 		this._roomid = value;
-	}
-
-	public get id():    number    {
-		return this._id;
-	}
-
-	public set id(value:    number   ) {
-		this._id = value;
 	}
 
 	public get state(): UserSate  {

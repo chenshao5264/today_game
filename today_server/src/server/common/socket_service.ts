@@ -24,6 +24,7 @@ export class SocketService {
         let io     = socketio(server);
 
         server.listen(this._config.port);
+        logger.info('服务器启动: ' + this._config.port);
         
 
         io.on('connection', function(socket: SocketIO.Socket) {

@@ -4,6 +4,9 @@ import { protobufjs } from '../server/common/socket_protobufjs';
 import { protocol } from '../server/common/socket_protocol';
 import BodyType = require('../server/defines/bodys')
 
+
+import gameApp = require('./game_client_app');
+
 var opts = {
     'reconnection': false,
     'force new connection': true,
@@ -46,7 +49,7 @@ export let start = function(account, sign, roomid, action) {
 
  
 function login() {
-    let packet: BodyType.BaseBody = {msgid: protocol.P_CL_LOBBY_REQ};
+    let packet: BodyType.BaseBody = {msgid: protocol.P_CS_LOGIN_REQ};
     let body: BodyType.LobbyBody = {}
 
     body.account = _account;
@@ -60,74 +63,56 @@ function login() {
     socket.emit('message', packet)
 }
 
-function createRoom() {
-    let packet: BodyType.BaseBody = {msgid: protocol.P_CL_CREATE_ROOM_REQ};
-    
-    packet = protobufjs.encode(packet);
-    socket.emit('message', packet)
-}
 
-function enterRoom() {
-    let packet: BodyType.BaseBody = {msgid: protocol.P_CL_ENTER_ROOM_REQ};
-    let body: BodyType.RoomBody = {};
-    body.roomid = 111111;
-    console.log(packet)
-    packet.room = body;
-    packet = protobufjs.encode(packet);
-    socket.emit('message', packet)
-}
+
+
+
+let _userid = 0
 
 //-- 消息处理
 let MSG = {};
-MSG[protocol.P_LC_LOBBY_ACK] = function(data: BodyType.BaseBody) {
+MSG[protocol.P_SC_LOGIN_ACK] = function(data: BodyType.BaseBody) {
     console.log(data);
     let body = data.lobby;
+
+    _userid = body.userinfo.userid;
     
     if (body.errcode == 0) {
         console.log('lobby 登录成功');
-        if (_action == 1) {
-            createRoom()
-        } else {
-            enterRoom()
-        }
+        selectGame();
     } else {
         console.log('errcode = ' + body.errcode);
     }
 }
 
-MSG[protocol.P_LC_CREATE_ROOM_ACK] = function(data: BodyType.BaseBody) {
+function selectGame() {
+    let packet: BodyType.BaseBody = {msgid: protocol.P_CS_SELECT_GAME_REQ};
+    let body: BodyType.SelectGameBody = {};
+    body.gameid = 1;
+
+    packet.selectgame = body;
+    packet = protobufjs.encode(packet);
+    socket.emit('message', packet)
+}
+
+MSG[protocol.P_SC_SELECT_GAME_ACK] = function(data: BodyType.BaseBody) {
     console.log(data);
-    let body = data.room;
-    
+    let body = data.selectgame;
     if (body.errcode == 0) {
-        console.log('create room 成功');
+        gameApp.start(_userid, _account, _sign, _action);
     } else {
-        console.log('create room errcode = ' + body.errcode);
+        console.log('errcode = ' + body.errcode);
     }
 }
 
-MSG[protocol.P_LC_ENTER_ROOM_ACK] = function(data: BodyType.BaseBody) {
-    console.log(data);
-    let body = data.room;
-
-    if (body.errcode == 0) {
-        console.log('enter room 成功');
-    } else {
-        console.log('enter room errcode = ' + body.errcode);
-    }
-}
 
 
-MSG[protocol.P_LC_LEAVE_ROOM_NOT] = function(data: BodyType.BaseBody) {
-    console.log(data);
-    let body = data.room;
 
-    console.log(body.userid +  ' 有人离开房间')
-}
 
-MSG[protocol.P_LC_START_GAME_NOT] = function(data: BodyType.BaseBody) {
-    console.log(data);
-    let body = data.gamestart;
+// MSG[protocol.P_GC_LEAVE_ROOM_NOT] = function(data: BodyType.BaseBody) {
+//     console.log(data);
+//     let body = data.room;
 
-    console.log('游戏开始');
-}
+//     console.log(body.userid +  ' 有人离开房间')
+// }
+

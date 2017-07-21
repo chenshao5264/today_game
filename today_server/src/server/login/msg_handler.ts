@@ -9,14 +9,7 @@ import BodyType = require('../defines/bodys');
 import dbMysql = require('../../tools/dbMysql');
 import dbRedis = require('../../tools/dbRedis');
 
-function sendMsgAck(socket: SocketIO.Socket, packet) {
-    if (socket.connected) {
-        packet = protobufjs.encode(packet);
-        socket.emit('message', packet);
-    } else {
-        logger.trace(address2ip(socket.handshake.address) + ' socket 已断开');
-    }
-}
+import { sendMsgAck } from '../common/socket_msg';
 
 function packRegisterMsg(msgid: number, body: BodyType.ReigsterBody) {
 
@@ -46,7 +39,7 @@ MsgHandler[protocol.P_CL_REGISTER_REQ] = function(socket: SocketIO.Socket, msg: 
             let suc = await dbMysql.async_create_account(account, password);
             if (suc) {
                 serverData.errcode = 0;
-                let succ = await dbMysql.async_create_user({account: account, nickname: nickname, gems: 100})
+                let succ = await dbMysql.async_create_user({account: account, nickname: nickname, sex: 1, gems: 100})
                 if (succ) {
                     logger.trace(account + '创建成功');
                 } else {
@@ -72,9 +65,7 @@ MsgHandler[protocol.P_CL_LOGIN_REQ] = function(socket: SocketIO.Socket, msg: Bod
     let serverData: BodyType.LoginBody = {};
 
     async function async_login() {
-        console.log('111111111')
         let info: BodyType.AccountBody = await dbMysql.async_get_account_info(clientData.account);
-        console.log('222222')
         if (info && info.password == clientData.password) {
             logger.trace('验证成功');
             //let userinfo: BodyType.UserBody = await dbMysql.async_get_user_info(clientData.account);

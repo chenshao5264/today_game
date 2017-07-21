@@ -11,12 +11,12 @@ message Register {
     optional int32 errcode   = 4;
 }
 
-message User {
-    optional int32 userid    = 1;
-    optional string account  = 2;
-    optional string nickname = 3;
-    optional int32 gems      = 4;
-}
+// message User {
+//     optional int32 userid    = 1;
+//     optional string account  = 2;
+//     optional string nickname = 3;
+//     optional int32 gems      = 4;
+// }
 
 message Login {
     // req

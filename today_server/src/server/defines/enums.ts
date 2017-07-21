@@ -8,7 +8,7 @@ export enum UserSate {
     STATE_BROKEN,
 }
 
-export enum RoomrSate {
+export enum RoomSate {
     STATE_NULL = 0,
     STATE_EMPTY,
     STATE_WAIT,

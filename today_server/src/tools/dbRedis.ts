@@ -7,13 +7,7 @@ function nop(a, b, c, d, e, f, g) {
 
 }
 
-let close = function() {
-    // if (client.connected) {
-    //     client.quit();
-    // } 
-}
-
-export let run = function() {
+export let init = function() {
     client = redis.createClient();
 
     client.on('end', function(err) {
@@ -41,15 +35,10 @@ export let set = function(key: string, value: string) {
         return;
     }
 
-    if (!client.connected) {
-        run();
-    } 
-
     client.set(key, value, function(err) {
         if (err) {
             logger.error('redis set error11' + err);
         }
-        close();
     });
 }
 
@@ -60,17 +49,12 @@ export let async_get = function(key: string) {
             return;
         }
 
-        if (!client.connected) {
-            run();
-        } 
-
         client.get(key, function(err, res) {
             if (err) {
                 logger.info('regis get err: ' + err);
             } else {
                 resolve(res);
             }        
-            close();
         });
     });
 }
@@ -83,20 +67,13 @@ export let get = function(key: string, callback: any) {
         return;
     }
 
-    if (!client.connected) {
-        run();
-    } 
-
     client.get(key, function(err, res) {
         if (err) {
             logger.info('regis get err: ' + err);
         } else {
             callback(res);
         }        
-        close();
     });
-
-    
 }
 
 export let hmset = function(key: string, value: any, callback?: any) {
@@ -106,18 +83,11 @@ export let hmset = function(key: string, value: any, callback?: any) {
         return;
     }
 
-    if (!client.connected) {
-        run();
-    } 
-
     client.hmset(key, value, function(err) {
         if (err) {
             logger.error('redis hmset error' + err);
         }
-        close();
     });
-
-    
 }
 
 export let async_hmget = function(key: string) {
@@ -127,20 +97,13 @@ export let async_hmget = function(key: string) {
             return;
         }
 
-        if (!client.connected) {
-            run();
-        } 
-
         client.hgetall(key, function(err, res) {
             if (err) {
                 logger.trace('redis hgetall err: ' + err);
             } else {
                 resolve(res);
             }
-             close();
         });
-
-       
     });
 }
 
@@ -152,18 +115,11 @@ export let hmget = function(key: string, callback: any) {
         return;
     }
 
-    if (!client.connected) {
-        run();
-    } 
-
     client.hgetall(key, function(err, res) {
         if (err) {
             logger.trace('redis hgetall err: ' + err);
         } else {
             callback(res);
         }
-        close();
     });
-
-    
 }

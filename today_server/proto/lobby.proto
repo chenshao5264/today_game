@@ -1,35 +1,52 @@
 package lobby;
 syntax = "proto3";
 
+message User {
+    optional int32 userid    = 1;
+    optional string account  = 2;
+    optional string nickname = 3;
+    optional int32 gems      = 4;
+    optional int32 sex       = 5;
+}
+
 message Lobby {
     // req
     optional string account = 1;
-    optional string sign  = 2;
+    optional string sign    = 2;
 
     // ack
-    optional int32 errcode = 3;
+    optional int32 errcode  = 3;
+    optional User userinfo  = 4;
 }
 
 message SelectGame {
+    optional int32 userid  = 1;
     // req
-    optional int32 gameid = 1;
+    optional int32 gameid  = 2;
 
     // ack
-    optional int32 errcode = 2;
+    optional int32 errcode = 3;
+    optional string ip     = 4;
+    optional int32 port    = 5; 
+    optional string sign   = 6;
 }
 
 message Room {
+     optional int32 userid  = 1;
+
     // req
 
     // ack
-    optional int32 errcode = 1;
-    optional int32 roomid  = 2;
+    optional int32 errcode = 2;
+    optional int32 roomid  = 3;
     
     // leave notify
-    optional int32 userid  = 3;
+   
 }
 
 message JoinRoom {
+    optional int32 userid  = 1;
+    
     // req
-    optional int32 roomid = 1;
+    optional int32 roomid = 2;
 }

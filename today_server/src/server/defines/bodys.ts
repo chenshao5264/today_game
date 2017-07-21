@@ -1,16 +1,19 @@
 export interface SocketIO_Socket extends SocketIO.Socket {
     userid?: number;
+    //sign?: string;
 }
 
 
 export interface BaseBody {
     msgid:     number;
 
-    register?:  ReigsterBody;
-    login?:     LoginBody;
-    lobby?:     LobbyBody;
-    room?:      RoomBody;
-    gamestart?: GameStartBody;
+    register?:   ReigsterBody;
+    login?:      LoginBody;
+    lobby?:      LobbyBody;
+    room?:       RoomBody;
+    selectgame?: SelectGameBody;
+
+    gamelogin?: GameLoginBody;
 }
 
 export interface ReigsterBody {
@@ -35,17 +38,20 @@ export interface LoginBody {
     sign?:    string;
     ip?:      string;
     port?:    number;
+    userid?:  number;
 }
 
 export interface LobbyBody {
     // req
-    account?:   string;
-    sign?:    string;
+    account?:  string;
+    sign?:     string;
 
     // ack
-    errcode?: number;
+    errcode?:  number;
     userinfo?: UserBody;
 }
+
+
 
 export interface RoomBody {
     // req create
@@ -63,11 +69,27 @@ export interface RoomBody {
     userid?: number;
 }
 
-export interface GameStartBody {
-    //
-
-    // notify
+export interface SelectGameBody {
+    // req
+    userid?:  number;
+    gameid?:  number;
     
+    // ack
+    errcode?: number;
+    sign?:    string;
+    ip?:      string;
+    port?:    number;
+}
+
+export interface GameLoginBody {
+    userid?:  number;
+    
+    // req
+    account?:  string;
+    sign?:     string;
+
+    // ack
+    errcode?:  number;
 }
 
 export interface AccountBody {

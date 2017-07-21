@@ -1,13 +1,13 @@
 import { logger } from './../../utils/logger';
 import { User } from './user';
-import { UserSate, RoomrSate } from '../defines/enums';
-import { MsgSender } from '../lobby/msgSender';
+import { UserSate, RoomSate } from '../defines/enums';
+//import { MsgSender } from '../lobby/msgSender';
 import BodyType = require('../defines/bodys');
 
 export class Room {
     private constructor() {
         this._count = 0;
-        this._state = RoomrSate.STATE_WAIT;
+        this._state = RoomSate.STATE_WAIT;
     }
     
     public static create(roomid: number, ownerid: number) {
@@ -15,14 +15,13 @@ export class Room {
         room._id      = roomid;
         room._ownerid = ownerid;
         
-
         return room;
     }
     
     private _users: {[key: number]: User} = {};  // {userid: user}
     private _ownerid: number = 0;   // 房主id
     private _id:      number = 0;   // 房间号
-    private _state:   number = RoomrSate.STATE_NULL; // 房间状态
+    private _state:   number = RoomSate.STATE_NULL; // 房间状态
     private _count:   number = 0; //房间人数
 
 	public get state():   number  {
@@ -45,7 +44,7 @@ export class Room {
         return this._users;
     }   
 
-    public delUser(userid: number) {        
+    public delUser(userid: number) {      
         let user = this._users[userid];
         if (user) {
             user.state = UserSate.STATE_LOBBY;
@@ -53,9 +52,8 @@ export class Room {
 
             --this._count;
             logger.info("房间人数 = " + this._count);
-            MsgSender.getInstance().notifyUserLeaveRoom(this._users, userid);
 
-            this._state = RoomrSate.STATE_WAIT;
+            this._state = RoomSate.STATE_WAIT;
         }
     }
 
@@ -77,10 +75,8 @@ export class Room {
         logger.info("房间人数 = " + this._count);
 
         if (this._count == 2) {
-            logger.info('房间满员');
-            this._state = RoomrSate.STATE_READY;
-
-            //MsgSender.getInstance().notifyGameStart(this._users);
+            logger.info('房间满员, 开始游戏倒计时');
+            this._state = RoomSate.STATE_READY;
         } 
     }
 }

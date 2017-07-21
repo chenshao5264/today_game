@@ -39,7 +39,11 @@ export let init = function(config: sql_config) {
         port:     config.port,
     });
 
-    return pool == null ? false : true;
+    if (pool) {
+        logger.trace('数据库初始化成功');
+    } else {
+        logger.error('数据库初始化失败');
+    }
 } 
 
 export let async_is_account_exsit = function(account: string): Promise<boolean> {
@@ -137,11 +141,12 @@ export let create_account = function(account: string, password: string, callback
 export let async_create_user = function(parms: BodyType.UserBody) {
     return new Promise<boolean>((resolve, reject) => {
         let account = parms.account;
-        let name = parms.nickname;
-        let gems = parms.gems;
-
-        var sql = 'INSERT INTO t_users(account,name,gems) VALUES("{0}","{1}",{2})';
-        sql = sql.format(account, name, gems);
+        let name    = parms.nickname;
+        let sex     = parms.sex;
+        let gems    = parms.gems;
+        
+        var sql = 'INSERT INTO t_users(account,name,sex,gems) VALUES("{0}","{1}",{2},{3})';
+        sql = sql.format(account, name, sex, gems);
         query(sql, function(err, rows, fields) {
             if (err) {
                 logger.error(account + " 重复创建");

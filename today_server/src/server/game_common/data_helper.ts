@@ -18,16 +18,17 @@ export class DataHelper {
     private _users: {[key: number]: User} = {}; // {userid: user}
 
     // 实例化用户 并加入到_users
-    public async appendUser(account: string, socket: BodyType.SocketIO_Socket) {
+    public async appendUser(account: string) {
 
         let userinfo = await dbMysql.async_get_user_info(account);
         let user = User.create(userinfo);
 
         this._users[userinfo.userid] = user;
-        socket.userid = userinfo.userid;
+       // console.log(this._users);
     }
 
     public getUserById(userid: number) {
+        //console.log(this._users)
         return this._users[userid];
     }
 }

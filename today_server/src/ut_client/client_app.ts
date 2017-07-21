@@ -81,7 +81,7 @@ MSG[protocol.P_LC_LOGIN_ACK] = function(data: BodyType.BaseBody) {
     console.log(data);
     if (body.errcode == 0) {
         console.log('login登录成功');
-
+        socket.disconnect();
         
         lobbyApp.start(account, body.sign, roomid, action);
 

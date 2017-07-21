@@ -1,0 +1,12 @@
+package game;
+syntax = "proto3";
+
+message Login {
+    // req
+    optional int32 userid   = 1;
+    optional string sign    = 2;
+    optional string account = 3;
+
+    // ack
+    optional int32 errcode  = 4;
+}

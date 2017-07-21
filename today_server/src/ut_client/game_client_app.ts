@@ -2,7 +2,7 @@ import io = require('socket.io-client');
 
 import { protobufjs } from '../server/common/socket_protobufjs';
 import { protocol } from '../server/common/socket_protocol';
-import BodyType = require('../server/common/define_body')
+import BodyType = require('../server/defines/bodys')
 
 var opts = {
     'reconnection': false,
@@ -12,16 +12,20 @@ var opts = {
 
 let socket;
 
-let _userid;
+let _account;
 let _sign;
 let _roomid;
 let _action;
 
-export let start = function(userid, sign, roomid, action) {
-    _roomid = roomid 
-    _action = action
+let _userid;
 
-    socket = io.connect('ws://127.0.0.1:9200', opts);
+export let start = function(userid, account, sign, action) {
+    _userid = userid;
+    _account = account;
+    _sign = sign;
+    _action = action;
+
+    socket = io.connect('ws://127.0.0.1:9300', opts);
 
     socket.on("disconnect", function(data) {
         console.log('disconnect disconnect disconnect');
@@ -37,37 +41,40 @@ export let start = function(userid, sign, roomid, action) {
         let msg = protobufjs.decode(data);
         MSG[msg.msgid](msg);
     })
-
-    _userid = userid;
-    _sign = sign;
 }
 
- 
-function login() {
-    let packet: BodyType.BaseBody = {msgid: protocol.P_CL_LOBBY_REQ};
-    let body: BodyType.LobbyBody = {}
+function createRoom() {
+    let packet: BodyType.BaseBody = {msgid: protocol.P_CG_CREATE_ROOM_REQ};
+    let clientData: BodyType.RoomBody = {};
+    clientData.userid = _userid;
 
-    body.userid = _userid;
-    body.sign   = _sign;
-
-    packet.lobby = body;
-
+    console.log(clientData);
+    packet.room = clientData;
 
     packet = protobufjs.encode(packet);
     socket.emit('message', packet)
 }
 
-function createRoom() {
-    let packet: BodyType.BaseBody = {msgid: protocol.P_CL_CREATE_ROOM_REQ};
-    
+ 
+function login() {
+    let packet: BodyType.BaseBody = {msgid: protocol.P_CG_LOGIN_REQ};
+    let body: BodyType.GameLoginBody = {}
+
+    body.userid = _userid;
+    body.account = _account;
+    body.sign   = _sign;
+
+    packet.gamelogin = body;
+
     packet = protobufjs.encode(packet);
     socket.emit('message', packet)
 }
 
 function enterRoom() {
-    let packet: BodyType.BaseBody = {msgid: protocol.P_CL_ENTER_ROOM_REQ};
+    let packet: BodyType.BaseBody = {msgid: protocol.P_CG_ENTER_ROOM_REQ};
     let body: BodyType.RoomBody = {};
     body.roomid = 111111;
+    body.userid = _userid;
     console.log(packet)
     packet.room = body;
     packet = protobufjs.encode(packet);
@@ -76,23 +83,25 @@ function enterRoom() {
 
 //-- 消息处理
 let MSG = {};
-MSG[protocol.P_LC_LOBBY_ACK] = function(data: BodyType.BaseBody) {
+MSG[protocol.P_GC_LOGIN_ACK] = function(data: BodyType.BaseBody) {
     console.log(data);
-    let body = data.lobby;
-    
+    let body = data.gamelogin;
+
+
     if (body.errcode == 0) {
-        console.log('lobby 登录成功');
+        console.log('game 登录成功');
         if (_action == 1) {
-            createRoom()
+            createRoom();
         } else {
-            enterRoom()
+            enterRoom();
         }
+        
     } else {
         console.log('errcode = ' + body.errcode);
     }
 }
 
-MSG[protocol.P_LC_CREATE_ROOM_ACK] = function(data: BodyType.BaseBody) {
+MSG[protocol.P_GC_CREATE_ROOM_ACK] = function(data: BodyType.BaseBody) {
     console.log(data);
     let body = data.room;
     
@@ -103,7 +112,7 @@ MSG[protocol.P_LC_CREATE_ROOM_ACK] = function(data: BodyType.BaseBody) {
     }
 }
 
-MSG[protocol.P_LC_ENTER_ROOM_ACK] = function(data: BodyType.BaseBody) {
+MSG[protocol.P_GC_ENTER_ROOM_ACK] = function(data: BodyType.BaseBody) {
     console.log(data);
     let body = data.room;
 
@@ -112,19 +121,4 @@ MSG[protocol.P_LC_ENTER_ROOM_ACK] = function(data: BodyType.BaseBody) {
     } else {
         console.log('enter room errcode = ' + body.errcode);
     }
-}
-
-
-MSG[protocol.P_LC_LEAVE_ROOM_NOT] = function(data: BodyType.BaseBody) {
-    console.log(data);
-    let body = data.room;
-
-    console.log(body.userid +  ' 有人离开房间')
-}
-
-MSG[protocol.P_LC_START_GAME_NOT] = function(data: BodyType.BaseBody) {
-    console.log(data);
-    let body = data.gamestart;
-
-    console.log('游戏开始');
 }

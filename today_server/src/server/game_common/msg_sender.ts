@@ -35,7 +35,7 @@ export class MsgSender {
         for (var uid in targets) {
             let target = targets[uid];
             if (target) {
-                let packet: BodyType.BaseBody = {msgid: protocol.P_LC_LEAVE_ROOM_NOT};
+                let packet: BodyType.BaseBody = {msgid: protocol.P_GC_LEAVE_ROOM_NOT};
                 let body: BodyType.RoomBody = {};
                 body.userid = userid;
                 packet.room = body;

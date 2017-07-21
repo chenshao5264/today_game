@@ -24,11 +24,9 @@ export class DataHelper {
         let user = User.create(userinfo);
 
         this._users[userinfo.userid] = user;
-       // console.log(this._users);
     }
 
     public getUserById(userid: number) {
-        //console.log(this._users)
         return this._users[userid];
     }
 }

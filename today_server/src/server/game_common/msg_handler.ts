@@ -97,8 +97,6 @@ MsgHandler[protocol.P_CG_ENTER_ROOM_REQ] = function(socket: BodyType.SocketIO_So
         return;
     }
 
-    
-
     let roomid = clientData.roomid;
 
     let packet: BodyType.BaseBody = {msgid: protocol.P_GC_ENTER_ROOM_ACK}

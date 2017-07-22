@@ -7,8 +7,9 @@ import { md5 } from '../../utils/crypto';
 import BodyType = require('../defines/bodys');
 import dbMysql = require('../../tools/dbMysql');
 import dbRedis = require('../../tools/dbRedis');
+import { mini_game_config } from '../config';
 
-import { sendMsgAck } from '../common/socket_msg';
+import { sendMsgAck } from '../common/base_sender';
 
 export let MsgHandler = {};
 MsgHandler['ON_DISCONNECT'] = function(userid: number) {
@@ -47,9 +48,11 @@ MsgHandler[protocol.P_CS_SELECT_GAME_REQ] = function(socket: BodyType.SocketIO_S
     let clientData: BodyType.SelectGameBody = msg.selectgame;
     let serverData: BodyType.SelectGameBody = {}
 
+    let gameConfig = mini_game_config(clientData.gameid);
+
     serverData.errcode = 0;
-    serverData.ip   = '127.0.0.1';
-    serverData.port = 9300;
+    serverData.ip   = gameConfig.ip;
+    serverData.port = gameConfig.port;
 
     let packet: BodyType.BaseBody = {msgid: protocol.P_SC_SELECT_GAME_ACK};
     packet.selectgame = serverData;

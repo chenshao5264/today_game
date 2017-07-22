@@ -19,3 +19,12 @@ export let mysql_config = function(): sql_config {
 export let loginConfig = require('../server/login/config').ipConfig;
 export let lobbyConfig = require('../server/lobby/config').ipConfig;
 
+export let mini_game_config = function(gameid) {
+    if (gameid == 1) {
+        return {
+            ip: '127.0.0.1',
+            port: 9300,
+        }
+    }
+}
+

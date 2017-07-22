@@ -91,6 +91,7 @@ function selectGame() {
     body.gameid = 1;
 
     packet.selectgame = body;
+
     packet = protobufjs.encode(packet);
     socket.emit('message', packet)
 }
@@ -109,10 +110,4 @@ MSG[protocol.P_SC_SELECT_GAME_ACK] = function(data: BodyType.BaseBody) {
 
 
 
-// MSG[protocol.P_GC_LEAVE_ROOM_NOT] = function(data: BodyType.BaseBody) {
-//     console.log(data);
-//     let body = data.room;
-
-//     console.log(body.userid +  ' 有人离开房间')
-// }
 

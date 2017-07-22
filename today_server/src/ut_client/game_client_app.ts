@@ -67,7 +67,20 @@ function login() {
     packet.gamelogin = body;
 
     packet = protobufjs.encode(packet);
-    socket.emit('message', packet)
+    socket.emit('message', packet);
+}
+
+// 请求离开房间
+function reqLeaveRoom() {
+    console.log('请求离开房间');
+    let packet: BodyType.BaseBody = {msgid: protocol.P_CG_LEAVE_ROOM_REQ};
+    let body: BodyType.RoomBody = {}
+
+    body.userid = _userid;
+    packet.room = body;
+
+    packet = protobufjs.encode(packet);
+    socket.emit('message', packet);
 }
 
 function enterRoom() {
@@ -77,6 +90,16 @@ function enterRoom() {
     body.userid = _userid;
     console.log(packet)
     packet.room = body;
+    packet = protobufjs.encode(packet);
+    socket.emit('message', packet)
+}
+
+function reqHandUp() {
+    let packet: BodyType.BaseBody = {msgid: protocol.P_CG_HAND_UP_REQ};
+    let body: BodyType.HandUpBody = {}
+    body.userid = _userid;
+    packet.handup = body;
+
     packet = protobufjs.encode(packet);
     socket.emit('message', packet)
 }
@@ -107,6 +130,9 @@ MSG[protocol.P_GC_CREATE_ROOM_ACK] = function(data: BodyType.BaseBody) {
     
     if (body.errcode == 0) {
         console.log('create room 成功');
+        setTimeout(function() {
+            reqHandUp();
+        }, 3000)
     } else {
         console.log('create room errcode = ' + body.errcode);
     }
@@ -118,7 +144,45 @@ MSG[protocol.P_GC_ENTER_ROOM_ACK] = function(data: BodyType.BaseBody) {
 
     if (body.errcode == 0) {
         console.log('enter room 成功');
+
+        setTimeout(function() {
+            reqHandUp();
+        }, 1000)
     } else {
         console.log('enter room errcode = ' + body.errcode);
     }
+}
+
+MSG[protocol.P_GC_LEAVE_ROOM_NOT] = function(data: BodyType.BaseBody) {
+    console.log(data);
+    let body = data.room;
+
+    console.log(body.userid +  ' 有人离开房间通知')
+}
+
+MSG[protocol.P_GC_LEAVE_ROOM_ACK] = function(data: BodyType.BaseBody) {
+    console.log(data);
+    let body = data.room;
+    if (body.errcode == 0) {
+        console.log('成功离开房间回复');
+    } else {
+        console.log('leave room errcode = ' + body.errcode);
+    }
+}
+
+MSG[protocol.P_GC_DISSOLVE_ROOM_NOT] = function(data: BodyType.BaseBody) {
+    console.log(data);
+    let body = data.room;
+    
+    console.log('房间解散');
+}
+
+MSG[protocol.P_GC_HAND_UP_ACK] = function(data: BodyType.BaseBody) {
+    console.log('举手回复');
+    console.log(data);
+}
+
+MSG[protocol.P_GC_HAND_UP_NOT] = function(data: BodyType.BaseBody) {
+    console.log('举手通知');
+    console.log(data);
 }

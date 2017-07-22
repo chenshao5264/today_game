@@ -31,22 +31,3 @@ message SelectGame {
     optional string sign   = 6;
 }
 
-message Room {
-     optional int32 userid  = 1;
-
-    // req
-
-    // ack
-    optional int32 errcode = 2;
-    optional int32 roomid  = 3;
-    
-    // leave notify
-   
-}
-
-message JoinRoom {
-    optional int32 userid  = 1;
-    
-    // req
-    optional int32 roomid = 2;
-}

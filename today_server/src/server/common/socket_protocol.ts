@@ -22,7 +22,15 @@ export enum protocol {
     P_CG_ENTER_ROOM_REQ,
     P_GC_ENTER_ROOM_ACK,
     P_CG_LEAVE_ROOM_REQ,
+    P_GC_LEAVE_ROOM_ACK,
     P_GC_LEAVE_ROOM_NOT,
+    P_GC_DISSOLVE_ROOM_NOT,
     // game
+
+    // mini
+    P_CG_HAND_UP_REQ = 4000,
+    P_GC_HAND_UP_ACK,
+    P_GC_HAND_UP_NOT,
+    // mini
 }
 

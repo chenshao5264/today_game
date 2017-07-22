@@ -5,7 +5,7 @@ export interface SocketIO_Socket extends SocketIO.Socket {
 
 
 export interface BaseBody {
-    msgid:     number;
+    msgid:       number;
 
     register?:   ReigsterBody;
     login?:      LoginBody;
@@ -13,7 +13,8 @@ export interface BaseBody {
     room?:       RoomBody;
     selectgame?: SelectGameBody;
 
-    gamelogin?: GameLoginBody;
+    gamelogin?:  GameLoginBody;
+    handup?:     HandUpBody
 }
 
 export interface ReigsterBody {
@@ -90,6 +91,10 @@ export interface GameLoginBody {
 
     // ack
     errcode?:  number;
+}
+
+export interface HandUpBody {
+    userid?: number;
 }
 
 export interface AccountBody {

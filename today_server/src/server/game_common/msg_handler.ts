@@ -8,7 +8,7 @@ import { UserSate } from '../defines/enums';
 import BodyType = require('../defines/bodys');
 import dbRedis = require('../../tools/dbRedis');
 
-import { sendMsgAck } from '../common/socket_msg';
+import { sendMsgAck } from '../common/base_sender';
 import { DataHelper } from './data_helper';
 import { RoomHelper } from './room_helper';
 
@@ -41,7 +41,7 @@ MsgHandler[protocol.P_CG_LOGIN_REQ] = function(socket: BodyType.SocketIO_Socket,
             socket.userid = clientData.userid;
             logger.trace(clientData.userid + " 连接验证成功");
 
-            await DataHelper.getInstance().appendUser(clientData.account);
+            await DataHelper.getInstance().appendUser(clientData.account, socket);
         } else {
             serverData.errcode = 1;
             logger.trace(clientData.userid + " 连接验证失败");
@@ -71,14 +71,12 @@ MsgHandler[protocol.P_CG_CREATE_ROOM_REQ] = function(socket: BodyType.SocketIO_S
 
     let user = DataHelper.getInstance().getUserById(userid);
     if (user) {
-        console.log('roomid = 111');
         let roomid = RoomHelper.getInstance().createRoom(userid);
-        console.log('roomid = ' + roomid);
-        if (roomid != 0) {
+        if (roomid > 0) {
             serverData.errcode = 0;
             serverData.roomid = roomid;
         } else {
-            serverData.errcode = 1;
+            serverData.errcode = roomid;
         }
     } else {
         serverData.errcode = 2;
@@ -108,5 +106,48 @@ MsgHandler[protocol.P_CG_ENTER_ROOM_REQ] = function(socket: BodyType.SocketIO_So
 
     packet.room = serverData;
 
+    sendMsgAck(socket, packet);
+}
+
+MsgHandler[protocol.P_CG_LEAVE_ROOM_REQ] = function(socket: BodyType.SocketIO_Socket, msg: BodyType.BaseBody) {
+    logger.trace("leave room req 请求");
+
+    let clientData: BodyType.RoomBody = msg.room;
+    let userid = clientData.userid
+
+    if (socket.userid != userid) {
+        logger.warn('userid 非法 ' + socket.userid + ' != ' + userid);
+        return;
+    }
+
+    let packet: BodyType.BaseBody = {msgid: protocol.P_GC_LEAVE_ROOM_ACK}
+    let serverData: BodyType.RoomBody = {}
+    serverData.errcode = 0;
+
+    packet.room = serverData;
+
+    sendMsgAck(socket, packet);
+
+    RoomHelper.getInstance().leaveRoom(userid);
+    DataHelper.getInstance().delUser(userid);
+}
+
+MsgHandler[protocol.P_CG_HAND_UP_REQ] = function(socket: BodyType.SocketIO_Socket, msg: BodyType.BaseBody) {
+    logger.trace("hand up req 请求");
+
+    let clientData: BodyType.HandUpBody = msg.handup;
+    let userid = clientData.userid
+
+    if (socket.userid != userid) {
+        logger.warn('userid 非法 ' + socket.userid + ' != ' + userid);
+        return;
+    }
+
+    RoomHelper.getInstance().handUp(userid);
+
+    let packet: BodyType.BaseBody = {msgid: protocol.P_GC_HAND_UP_ACK}
+    let serverData: BodyType.HandUpBody = {}
+
+    packet.handup = serverData;
     sendMsgAck(socket, packet);
 }

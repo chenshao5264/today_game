@@ -10,3 +10,21 @@ message Login {
     // ack
     optional int32 errcode  = 4;
 }
+
+message Room {
+     optional int32 userid  = 1;
+
+    // req
+
+    // ack
+    optional int32 errcode = 2;
+    optional int32 roomid  = 3;
+    
+    // leave notify  
+}
+
+message HandUp {
+    optional int32 userid  = 1;
+}
+
+

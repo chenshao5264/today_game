@@ -2,7 +2,9 @@ import { UserSate } from '../defines/enums';
 import BodyType = require('../defines/bodys');
 
 export class User {
-    
+	
+	private _socket: BodyType.SocketIO_Socket;
+	
     private _state: UserSate;
     private _isOwner: boolean;
 	private _roomid: number;
@@ -28,6 +30,24 @@ export class User {
 
 		return user;
 	}
+
+	public get gems(): number {
+		return this._gems;
+	}
+
+	public set gems(value: number) {
+		this._gems = value;
+	}
+	
+
+	public get socket(): BodyType.SocketIO_Socket {
+		return this._socket;
+	}
+
+	public set socket(value: BodyType.SocketIO_Socket) {
+		this._socket = value;
+	}
+	
 
 	public get id(): number {
 		return this._id;

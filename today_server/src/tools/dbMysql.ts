@@ -270,6 +270,17 @@ export let get_account_info = function(account, callback) {
     });
 };
 
+export let async_update_user_value = function(userid: number, key: string, value: number|string) {
+    return new Promise<void>((resolve, reject) => {
+        if (key == null || value == null) {
+            return;
+        }
 
-
-
+        var sql = 'UPDATE t_users SET ' + key + '=' + value + ' WHERE userid=' + userid;
+        query(sql, function(err) {
+            if (err) {
+                logger.error(err);
+            }
+        });
+    });
+}

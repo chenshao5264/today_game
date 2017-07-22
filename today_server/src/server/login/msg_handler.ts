@@ -9,7 +9,7 @@ import BodyType = require('../defines/bodys');
 import dbMysql = require('../../tools/dbMysql');
 import dbRedis = require('../../tools/dbRedis');
 
-import { sendMsgAck } from '../common/socket_msg';
+import { sendMsgAck } from '../common/base_sender';
 
 function packRegisterMsg(msgid: number, body: BodyType.ReigsterBody) {
 

@@ -1,0 +1,7 @@
+package minigp;
+syntax = "proto3";
+
+message CGOpReq {
+    optional int32 userid    = 1;
+    
+}
